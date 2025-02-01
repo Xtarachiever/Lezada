@@ -1,9 +1,13 @@
-<script setup>
-import TheWelcome from '../components/TheWelcome.vue'
+<template>
+  <LayoutView> </LayoutView>
+</template>
+
+<script>
+import LayoutView from '@/components/dashboard/LayoutView.vue'
+
+export default {
+  components: { LayoutView },
+}
 </script>
 
-<template>
-  <main>
-    <TheWelcome />
-  </main>
-</template>
+<style></style>
