@@ -8,6 +8,7 @@ module.exports = {
         gray1: '#777',
         gray2: '#f7f7f7',
         lightBlack: '#333',
+        lightGray:'#eee',
         transparentBg: 'rgba(119,119,119,0.3)',
       },
       boxShadow: {

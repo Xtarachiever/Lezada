@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  props: ['type', 'onChange', 'value', 'iconName', 'placeholder', 'label'],
+  props: ['type', 'onChange', 'value', 'iconName', 'placeholder', 'label','variant'],
 }
 </script>
 
