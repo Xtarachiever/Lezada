@@ -22,10 +22,12 @@
             <div v-for="[menuItem, key] in Object.entries(menuItems[activeNavLink.toLowerCase()]).slice(1, -1)"
               :key="menuItem" class="space-y-[15px] pb-8 menuItems w-full">
               <div v-for="(item, index) in key" :key="index" class="relative">
-                <p :class="index === 0 ? 'font-[500] text-lightBlack' : 'text-gray cursor-pointer'" @mouseover="updateNavLinkSubTitle(item.title)" @mouseleave="navLinkSubTitle = ''">
-                  <span>{{ item.title }}</span>
-                  <img v-show="navLinkSubTitle === item.title" :src="'/'+navLinkSubTitle.toLowerCase().split(' ').join('-') + '.jpg'" class="absolute z-[10] w-[220px] rounded-sm -top-[50px] shadow-md -right-[80px]"/>
-                </p>
+                <router-link :to="item.link">
+                  <p :class="index === 0 ? 'font-[500] text-lightBlack' : 'text-gray cursor-pointer'" @mouseover="updateNavLinkSubTitle(item.title)" @mouseleave="navLinkSubTitle = ''">
+                    <span>{{ item.title }}</span>
+                    <img v-show="navLinkSubTitle === item.title" :src="'/'+navLinkSubTitle.toLowerCase().split(' ').join('-') + '.jpg'" class="absolute z-[10] w-[220px] rounded-sm -top-[50px] shadow-md -right-[80px]"/>
+                  </p>
+                </router-link>
               </div>
             </div>
             <div v-if="menuItems[activeNavLink.toLowerCase()].image"

@@ -9,6 +9,7 @@ module.exports = {
         gray2: '#f7f7f7',
         lightBlack: '#333',
         lightGray:'#eee',
+        blue:'#68aaeb',
         transparentBg: 'rgba(119,119,119,0.3)',
       },
       boxShadow: {

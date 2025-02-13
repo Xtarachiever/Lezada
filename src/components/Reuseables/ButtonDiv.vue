@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button :class="variant ? variant : 'blackButton'" :type="type ? type : 'button'">
+    <button :class="[variant ? variant : 'blackButton', moreStylings]" :type="type ? type : 'button'">
       {{ name }}
     </button>
   </div>
@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  props: ['name', 'type', 'variant'],
+  props: ['name', 'type', 'variant','moreStylings'],
 }
 </script>
 

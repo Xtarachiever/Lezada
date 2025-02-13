@@ -17,7 +17,9 @@ import {
   FaInstagram,
   PrYoutube,
   CoArrowRight,
-  IoCloseSharp
+  IoCloseSharp,
+  MdArrowforwardios,
+  MdArrowbackiosnew
 } from 'oh-vue-icons/icons'
 const app = createApp(App)
 
@@ -33,7 +35,9 @@ addIcons(
   FaInstagram,
   PrYoutube,
   CoArrowRight,
-  IoCloseSharp
+  IoCloseSharp,
+  MdArrowforwardios,
+  MdArrowbackiosnew
 )
 
 app.use(router)
