@@ -21,8 +21,11 @@
           <div class="flex justify-between gap-[60px]" v-if="menuItems[activeNavLink.toLowerCase()].length > 1">
             <div v-for="[menuItem, key] in Object.entries(menuItems[activeNavLink.toLowerCase()]).slice(1, -1)"
               :key="menuItem" class="space-y-[15px] pb-8 menuItems w-full">
-              <div v-for="(item, index) in key" :key="index">
-                <p :class="index === 0 ? 'font-[500] text-lightBlack' : 'text-gray'">{{ item.title }}</p>
+              <div v-for="(item, index) in key" :key="index" class="relative">
+                <p :class="index === 0 ? 'font-[500] text-lightBlack' : 'text-gray cursor-pointer'" @mouseover="updateNavLinkSubTitle(item.title)" @mouseleave="navLinkSubTitle = ''">
+                  <span>{{ item.title }}</span>
+                  <img v-show="navLinkSubTitle === item.title" :src="'/'+navLinkSubTitle.toLowerCase().split(' ').join('-') + '.jpg'" class="absolute z-[10] w-[220px] rounded-sm -top-[50px] shadow-md -right-[80px]"/>
+                </p>
               </div>
             </div>
             <div v-if="menuItems[activeNavLink.toLowerCase()].image"
@@ -64,6 +67,7 @@ export default {
   setup() {
     const navLinksContent = NavLinks
     let activeNavLink = ref('')
+    let navLinkSubTitle = ref('')
     const menuItems = reactive(menuItem)
     let dropdownPosition = reactive({ left: 0, top: 80 })
 
@@ -75,12 +79,27 @@ export default {
       dropdownPosition.top = linkRect.bottom + window.scrollY;
     }
 
+    const updateNavLinkSubTitle = (name) =>{
+
+      const img = new Image();
+      img.src = `/${name.toLowerCase().split(' ').join('-')}.jpg`;
+
+      img.onload = () => {
+        navLinkSubTitle.value = name;
+      };
+      img.onerror = () =>{
+        navLinkSubTitle.value = ''
+      }
+    }
+
     return {
       navLinksContent,
       activeNavLinkOnHover,
       activeNavLink,
       menuItems,
-      dropdownPosition
+      dropdownPosition,
+      navLinkSubTitle,
+      updateNavLinkSubTitle
     }
   },
 }
