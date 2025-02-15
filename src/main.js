@@ -19,7 +19,8 @@ import {
   CoArrowRight,
   IoCloseSharp,
   MdArrowforwardios,
-  MdArrowbackiosnew
+  MdArrowbackiosnew,
+  MdAddRound
 } from 'oh-vue-icons/icons'
 const app = createApp(App)
 
@@ -37,7 +38,8 @@ addIcons(
   CoArrowRight,
   IoCloseSharp,
   MdArrowforwardios,
-  MdArrowbackiosnew
+  MdArrowbackiosnew,
+  MdAddRound
 )
 
 app.use(router)

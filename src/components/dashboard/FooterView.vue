@@ -1,6 +1,34 @@
 <template>
   <div class="bg-gray2 py-24 px-12 lg:px-6">
-    <div class="justify-items-center grid grid-cols-3 lg:grid-cols-6 footer-contents gap-[50px]">
+    <div v-if="fewContentFooter" class="flex items-center flex-wrap justify-between gap-[30px] sm:w-[85%] m-auto">
+      <div class="text-gray1 space-y-[10px]">
+        <div class="flex gap-x-[20px] text-[14px] flex-wrap">
+          <p>ABOUS US</p>
+          <p>STORE LOCATION</p>
+          <p>CONTACT</p>
+          <p>SUPPORT</p>
+          <p>POLICY</p>
+          <p>FAQS</p>
+        </div>
+        <div class="text-[14px]">
+          <span>© 2025 lezada. All Rights Reserved</span>
+          <p class="text-black font-bold contact_number">(+00) 123 567990</p>
+          <span>contact@lezada.com</span>
+        </div>
+      </div>
+      <div class="second-footer-content flex flex-col gap-[10px]">
+        <div class="flex gap-[20px]">
+          <v-icon name="co-twitter"></v-icon>
+          <v-icon name="fa-facebook-f"></v-icon>
+          <v-icon name="fa-instagram"></v-icon>
+          <v-icon name="pr-youtube"></v-icon>
+        </div>
+        <div>
+          <img src="/pay.png" alt="pay"/>
+        </div>
+      </div>
+    </div>
+    <div class="justify-items-center grid grid-cols-3 lg:grid-cols-6 footer-contents gap-[50px]" v-else>
       <div class="col-span-1">
         <div class="pb-4">
           <img src="/logo.png" alt="Lezada" />
@@ -45,11 +73,25 @@
 </template>
 
 <script>
+import { onMounted, reactive, ref } from 'vue';
 import InputDiv from '../Reuseables/InputDiv.vue'
 export default {
   components: {
     InputDiv,
   },
+
+  setup(){
+    const fewContentFooter = ref(false);
+    const pathsForFewContentFooter = reactive(['/'])
+
+    onMounted(()=>{
+      fewContentFooter.value = pathsForFewContentFooter.includes(window.location.pathname) ? true : false
+    })
+
+    return{
+      fewContentFooter
+    }
+  }
 }
 </script>
 
@@ -75,5 +117,35 @@ export default {
 .footer-contents p.header,
 .contacts p svg {
   color: #333;
+}
+.contact_number{
+  position: relative;
+  padding: 0px 10px;
+  display: inline;
+}
+.contact_number::after,
+.contact_number::before{
+  content: "";
+  display: block;
+  position: absolute;
+  height: 15px;
+  width: 1px;
+  background: #333;
+  top: 2px;
+}
+.contact_number::after{
+  right: 4px;
+}
+.contact_number::before{
+  left: 4px;
+}
+.second-footer-content{
+    display: flex;
+    align-items: end;
+}
+@media screen and (max-width:1008px){
+  .second-footer-content{
+    align-items: start;
+  }
 }
 </style>

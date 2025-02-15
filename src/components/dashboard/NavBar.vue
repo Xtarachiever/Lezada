@@ -1,9 +1,9 @@
 <template>
   <div class="relative">
-    <div class="flex h-[80px] items-center gap-[30px] justify-between px-28 lg:px-8 shadow-md bg-gray2">
+    <div class="flex h-[80px] items-center gap-[30px] justify-between px-28 lg:px-12 shadow-md bg-gray2">
       <div class="flex items-center gap-[10px] w-[150px] lg:w-[200px]">
-        <v-icon name="pr-bars" scale="2" class="text-lightBlack largeScreenOnly"></v-icon>
-        <img src="/logo.png" alt="Lezada" class="w-[100px] lg:w-[150px]" />
+        <v-icon name="pr-bars" scale="2" class="text-lightBlack largeScreenOnly" v-show="!isHome"></v-icon>
+        <img src="/logo.png" alt="Lezada" class="w-[100px] lg:w-[130px]" />
       </div>
       <div class="gap-[10px] navlinks justify-between text-gray h-full"  @mouseleave="activeNavLink = ''">
         <div v-for="navLink in navLinksContent" :key="navLink" class="cursor-pointer h-full items-center flex relative"
@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { reactive, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import NavLinks from './NavLinks.json';
 import { menuItem } from '../data/menuItems'
 export default {
@@ -72,13 +72,19 @@ export default {
     let navLinkSubTitle = ref('')
     const menuItems = reactive(menuItem)
     let dropdownPosition = reactive({ left: 0, top: 80 })
+    const isHome = ref(false)
+
+    // on mounted
+    onMounted(() => {
+      isHome.value = window.location.pathname === "/";
+    });
 
     // Methods
     const activeNavLinkOnHover = (name, event) => {
       activeNavLink.value = name
       const linkRect = event.currentTarget.getBoundingClientRect();
       dropdownPosition.left = linkRect.left + window.scrollX;
-      dropdownPosition.top = linkRect.bottom + window.scrollY;
+      dropdownPosition.top = linkRect.bottom;
     }
 
     const updateNavLinkSubTitle = (name) =>{
@@ -101,7 +107,8 @@ export default {
       menuItems,
       dropdownPosition,
       navLinkSubTitle,
-      updateNavLinkSubTitle
+      updateNavLinkSubTitle,
+      isHome
     }
   },
 }

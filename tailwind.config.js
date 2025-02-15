@@ -9,7 +9,9 @@ module.exports = {
         gray2: '#f7f7f7',
         lightBlack: '#333',
         lightGray:'#eee',
+        lightBlue:'#98d8ca',
         blue:'#68aaeb',
+        tomatoRed:'#c61932',
         transparentBg: 'rgba(119,119,119,0.3)',
       },
       boxShadow: {
@@ -21,6 +23,9 @@ module.exports = {
         999: '999',
         1: '1',
       },
+      gridTemplateColumns:{
+        'fill-350': 'repeat(auto-fill, minmax(250px, 1fr))',
+      }
     },
   },
   variants: {

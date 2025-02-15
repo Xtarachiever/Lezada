@@ -1,12 +1,43 @@
 <template>
   <LayoutView>
-    <div class="slider relative">
-      <div>
-        <v-icon name="md-arrowbackiosnew" class="absolute transition-all left-[30px] -translate-y-[50%] top-[50%] text-gray2 hover:text-lightBlack cursor-pointer z-[2]" scale="2.8" @click="handleSlideFunctionality('decrement')"></v-icon>
-        <v-icon name="md-arrowforwardios" class="absolute transition-all right-[30px] -translate-y-[50%] top-[50%] text-gray2 hover:text-lightBlack cursor-pointer z-[2]" scale="2.8" @click="handleSlideFunctionality('increment')"></v-icon>
+    <div class="home_div">
+      <div class="slider relative">
+        <div>
+          <v-icon name="md-arrowbackiosnew"
+            class="absolute transition-all left-[15px] sm:left-[30px] -translate-y-[50%] top-[45%] text-gray2 hover:text-lightBlack cursor-pointer z-[1]"
+            scale="2.8" @click="handleSlideFunctionality('decrement')"></v-icon>
+          <v-icon name="md-arrowforwardios"
+            class="absolute transition-all right-[15px] sm:right-[30px] -translate-y-[50%] top-[45%] text-gray2 hover:text-lightBlack cursor-pointer z-[1]"
+            scale="2.8" @click="handleSlideFunctionality('increment')"></v-icon>
+        </div>
+        <div v-for="eachSlider in sliderDetails" :key="eachSlider.title" v-show="eachSlider.image === defaultSlide">
+          <CarouselDiv :image="eachSlider.image" :description="eachSlider.description" :title="eachSlider.title" />
+        </div>
       </div>
-      <div v-for="eachSlider in sliderDetails" :key="eachSlider.title" v-show="eachSlider.image === defaultSlide">
-        <CarouselDiv :image="eachSlider.image" :description="eachSlider.description" :title="eachSlider.title"/>
+      <div class="m-auto">
+        <div class=" py-16">
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-[30px] gap-y-[50px]">
+            <HoverProductCard newProduct />
+            <HoverProductCard newProduct sales />
+            <HoverProductCard newProduct sales />
+            <HoverProductCard sales out />
+            <HoverProductCard newProduct />
+            <HoverProductCard newProduct sales />
+            <HoverProductCard out sales />
+            <HoverProductCard sales />
+          </div>
+        </div>
+        <div class="text-center space-y-[30px]">
+          <img src="/cabinet.jpg" alt="cabinet" class="w-full max-w-[800px] m-auto" />
+          <div class="tags text-gray1 flex items-center justify-center gap-[20px] text-md cursor-pointer">
+            <p>#summer</p>
+            <p>#shelf</p>
+            <p>#sale</p>
+          </div>
+          <div class="text-4xl py-6">
+            Up To 40% Off Final Sale Items. <br />Caught in the moment!
+          </div>
+        </div>
       </div>
     </div>
   </LayoutView>
@@ -16,29 +47,30 @@
 import LayoutView from '@/components/dashboard/LayoutView.vue'
 import CarouselDiv from '@/components/Reuseables/CarouselDiv.vue';
 import { reactive, ref } from 'vue';
+import HoverProductCard from '@/components/Reuseables/HoverProductCard.vue';
 export default {
-  components: { LayoutView, CarouselDiv },
+  components: { LayoutView, CarouselDiv, HoverProductCard },
 
-  setup(){
+  setup() {
     const sliderDetails = reactive([
-      {image:'/carousel-1.jpg', description:"Bottle Grinder, Small, 2-Piece", title:"Accessories" },
-      {image:'/carousel-2.jpg',  description:"Large, Food board", title:"Handmade" },
-      {image:'/carousel-3.jpg',  description:"Tribeca Hubert, Pendant", title:"Accessories" },
+      { image: '/carousel-1.jpg', description: "Bottle Grinder, Small, 2-Piece", title: "Accessories" },
+      { image: '/carousel-2.jpg', description: "Large, Food board", title: "Handmade" },
+      { image: '/carousel-3.jpg', description: "Tribeca Hubert, Pendant", title: "Accessories" },
     ])
 
     let defaultSlide = ref(sliderDetails[0]?.image)
 
-    const handleSlideFunctionality = (value) =>{
+    const handleSlideFunctionality = (value) => {
 
-      let i = sliderDetails.findIndex((value)=>value.image === defaultSlide.value)
-        if(value === 'increment'){
-          i = (i+1) % sliderDetails.length
-        }else{
-          i = i > 0 ? i-1 : sliderDetails.length - 1
-        }
-        defaultSlide.value = sliderDetails[i].image
+      let i = sliderDetails.findIndex((value) => value.image === defaultSlide.value)
+      if (value === 'increment') {
+        i = (i + 1) % sliderDetails.length
+      } else {
+        i = i > 0 ? i - 1 : sliderDetails.length - 1
+      }
+      defaultSlide.value = sliderDetails[i].image
     }
-    return{
+    return {
       defaultSlide,
       handleSlideFunctionality,
       sliderDetails
@@ -47,4 +79,28 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.home_div{
+  width: 100%;
+  margin: auto;
+  max-width: 1200px;
+  padding: 0px 20px;
+}
+.tags p {
+  transition: all .3s ease-in;
+}
+
+.tags p:hover {
+  text-decoration: underline;
+}
+@media screen and (max-width:1190px) {
+  .home_div{
+  width: 90%;
+}
+}
+@media screen and (max-width:550px) {
+  .home_div{
+    width: 100%;
+  }
+}
+</style>
