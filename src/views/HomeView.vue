@@ -1,20 +1,20 @@
 <template>
   <LayoutView>
-    <div class="home_div">
+    <div >
       <div class="slider relative">
         <div>
           <v-icon name="md-arrowbackiosnew"
-            class="absolute transition-all left-[15px] sm:left-[30px] -translate-y-[50%] top-[45%] text-gray2 hover:text-lightBlack cursor-pointer z-[1]"
+            class="absolute transition-all left-[15px] sm:left-[30px] -translate-y-[50%] top-[45%] text-gray2 hover:text-lightBlack cursor-pointer z-[2]"
             scale="2.8" @click="handleSlideFunctionality('decrement')"></v-icon>
           <v-icon name="md-arrowforwardios"
-            class="absolute transition-all right-[15px] sm:right-[30px] -translate-y-[50%] top-[45%] text-gray2 hover:text-lightBlack cursor-pointer z-[1]"
+            class="absolute transition-all right-[15px] sm:right-[30px] -translate-y-[50%] top-[45%] text-gray2 hover:text-lightBlack cursor-pointer z-[2]"
             scale="2.8" @click="handleSlideFunctionality('increment')"></v-icon>
         </div>
-        <div v-for="eachSlider in sliderDetails" :key="eachSlider.title" v-show="eachSlider.image === defaultSlide">
+        <div v-for="eachSlider in sliderDetails" :key="eachSlider.title" v-show="eachSlider.image === defaultSlide" class="home_div">
           <CarouselDiv :image="eachSlider.image" :description="eachSlider.description" :title="eachSlider.title" />
         </div>
       </div>
-      <div class="m-auto">
+      <div class="m-auto home_div">
         <div class=" py-16">
           <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-[30px] gap-y-[50px]">
             <HoverProductCard newProduct />
@@ -98,9 +98,5 @@ export default {
   width: 90%;
 }
 }
-@media screen and (max-width:550px) {
-  .home_div{
-    width: 100%;
-  }
-}
+
 </style>

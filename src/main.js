@@ -4,6 +4,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import { OhVueIcon, addIcons } from 'oh-vue-icons'
+import VueSplide from '@splidejs/vue-splide';
 
 import {
   PrBars,
@@ -43,5 +44,6 @@ addIcons(
 )
 
 app.use(router)
+app.use( VueSplide );
 app.component('v-icon', OhVueIcon)
 app.mount('#app')
