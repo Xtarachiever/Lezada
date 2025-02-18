@@ -49,7 +49,7 @@
         <v-icon name="fa-user-alt" class="largeScreenOnly"></v-icon>
         <v-icon name="hi-heart" @click="handleActivatorClicks('wishlist')" class="cursor-pointer"></v-icon>
         <v-icon name="md-shoppingcart-round" @click="handleActivatorClicks('cart')" class="cursor-pointer"></v-icon>
-        <v-icon name="pr-bars" scale="1.5" class="text-lightBlack smallScreenOnly"></v-icon>
+        <v-icon name="pr-bars" scale="1.5" class="cursor-pointer text-lightBlack smallScreenOnly" @click="handleActivatorClicks('side_bar')"></v-icon>
       </div>
     </div>
   </div>

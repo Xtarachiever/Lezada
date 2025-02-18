@@ -3,10 +3,11 @@
     <label v-show="label" class="text-black uppercase">{{ label }}</label>
     <input
       :type="type ? type : 'text'"
-      v-on:change="onChange ? onChange : () => {}"
-      :value="value ? value : ''"
+      :value="modelValue ? modelValue : ''"
       :class="variant ? variant : 'borderBottomInput'"
+      @input="$emit('update:modelValue', $event.target.value)"
       :placeholder="placeholder ? placeholder : ''"
+      class="w-full"
     />
     <v-icon
       v-if="iconName"
@@ -19,7 +20,8 @@
 
 <script>
 export default {
-  props: ['type', 'onChange', 'value', 'iconName', 'placeholder', 'label','variant'],
+  props: ['type', 'modelValue', 'iconName', 'placeholder', 'label','variant'],
+  emits: ['update:modelValue'],
 }
 </script>
 
