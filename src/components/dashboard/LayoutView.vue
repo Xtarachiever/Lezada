@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="relative">
     <div class="fixed top-[0px] w-full z-[2]">
       <NavBar :handleActivatorClicks="handleActivatorClicks"/>
     </div>
-    <div v-show="sideBarActivators[activeName]" class="top-[0px] fixed w-full h-full bg-transparentBg z-[10]">
+    <div v-show="sideBarActivators[activeName] && handleLargeScreenVisibility" class="top-[0px] fixed w-full h-full bg-transparentBg z-[10]">
       <SideBar :handleActivatorClicks="handleActivatorClicks" :name="activeName" />
     </div>
     <div v-show="sideBarActivators['search']" class="top-[0px] fixed w-full h-full bg-transparentBg z-[10]">
@@ -20,7 +20,7 @@
 import NavBar from './NavBar.vue'
 import FooterView from './FooterView.vue'
 import SideBar from './SideBar.vue'
-import { reactive, ref } from 'vue';
+import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
 import SearchView from './SearchView.vue';
 export default {
   components: { NavBar, FooterView, SideBar, SearchView },
@@ -29,16 +29,40 @@ export default {
     const sideBarActivators = reactive({})
     let activeName = ref('')
 
+    const largeScreenVisibleModals = ref(window.matchMedia("(min-width: 991px)").matches)
+
   // Methods
     const handleActivatorClicks = (name) =>{
       sideBarActivators[name] = !sideBarActivators[name]
       activeName.value = name
     }
 
+    const updateScreenSize = () => {
+      activeName.value = ''
+      largeScreenVisibleModals.value = window.matchMedia("(min-width: 991px)").matches;
+    };
+
+onMounted(() => {
+  window.addEventListener("resize", updateScreenSize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", updateScreenSize);
+});
+
+    const handleLargeScreenVisibility = computed(() => {
+      if (!largeScreenVisibleModals.value) {
+        return !!sideBarActivators['side_bar'];
+      }
+      return true;
+    });
+
     return{
       handleActivatorClicks,
       sideBarActivators,
-      activeName
+      activeName,
+      largeScreenVisibleModals,
+      handleLargeScreenVisibility
     }
   }
 }

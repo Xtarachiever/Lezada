@@ -1,17 +1,17 @@
 <template>
-  <div>
-    <div class="w-full bg-grayWhite py-2 relative">
-      <div class="w-[80%]">
+  <div class="">
+    <div class="w-full bg-grayWhite py-2 fixed z-[10] h-[60px]">
+      <div class="w-[80%] fixed">
         <InputDiv v-model="inputValue" variant="border-0 px-4 bg-transparent pl-5 outline-none text-black"
           placeholder="Search here" />
       </div>
       <v-icon v-show="inputValue !== ''" name="io-close-sharp"
-        class="text-lightBlack absolute right-[50px] top-[50%] cursor-pointer -translate-y-[50%]" scale="1"
+        class="text-lightBlack fixed right-[50px] top-[30px] cursor-pointer -translate-y-[50%]" scale="1"
         @click="inputValue = ''"></v-icon>
       <v-icon name="io-search" scale="0.9"
-        class="cursor-pointer absolute right-[15px] top-[50%] -translate-y-[50%] w-[30px]"></v-icon>
+        class="cursor-pointer fixed right-[15px] top-[30px] -translate-y-[50%] w-[30px]"></v-icon>
     </div>
-    <div class="space-y-[15px] pt-8 font-semibold">
+    <div class="space-y-[15px] pt-[80px] font-semibold pb-[150px]">
       <div v-for="[key, value] in Object.entries(menuItems)" :key="key" class="px-5">
         <div class="flex relative items-center justify-between py-1">
           <p class="font-[550]">{{ key.charAt(0).toUpperCase() + key.slice(1) }}</p>
@@ -40,6 +40,30 @@
         </div>
       </div>
     </div>
+    <div class="px-6 py-[40px]">
+      <div>
+        <span class="text-gray1">Choose Language</span>
+        <SelectDiv :options="['English','French','Germany']" />
+      </div>
+      <div class=" py-4">
+        <span class="text-gray1">Choose Currency</span>
+        <SelectDiv :options="['USD','EUR','GBP']" />
+      </div>
+      <div class="text-center pt-[50px]">
+        <div class="contact">
+          <v-icon name="fa-user-alt" scale="0.8"></v-icon>
+          <span>Login / Register</span>
+        </div>
+        <div class="contact py-[10px]">
+          <v-icon name="io-phone-portrait-sharp" scale="0.8"></v-icon>
+          <span>(1245) 2456 012</span>
+        </div>
+        <div class="contact">
+          <v-icon name="md-email-round" scale="0.8"></v-icon>
+          <span>info@yourdomain.com</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -47,10 +71,12 @@
 import { computed, reactive, ref } from 'vue';
 import InputDiv from '../Reuseables/InputDiv.vue';
 import { menuItem } from '../data/menuItems';
+import SelectDiv from '../Reuseables/SelectDiv.vue';
 
 export default {
   components: {
-    InputDiv
+    InputDiv,
+    SelectDiv
   },
 
   setup() {
@@ -95,4 +121,18 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.contact{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.contact span{
+  color: #777;
+  transition: all .3s ease-in-out;
+  cursor: pointer;
+}
+.contact span:hover{
+  color: black;
+}
+</style>

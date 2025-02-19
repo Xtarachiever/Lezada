@@ -23,7 +23,9 @@ import {
   MdArrowbackiosnew,
   MdAddRound,
   CoPlus,
-  PxMinus
+  PxMinus,
+  IoPhonePortraitSharp,
+  MdEmailRound
 } from 'oh-vue-icons/icons'
 const app = createApp(App)
 
@@ -44,7 +46,9 @@ addIcons(
   MdArrowbackiosnew,
   MdAddRound,
   CoPlus,
-  PxMinus
+  PxMinus,
+  IoPhonePortraitSharp,
+  MdEmailRound
 )
 
 app.use(router)
