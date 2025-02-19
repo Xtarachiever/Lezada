@@ -1,11 +1,6 @@
 <template>
   <LayoutView>
-    <div class="bg-[url('/register-banner.jpg')] h-[220px] pt-4 px-5">
-      <div class="max-w-[1200px] m-auto w-[80%] lg:w-full">
-        <p class="mt-[50px] text-[45px]">Customer Login</p>
-        <p></p>
-      </div>
-    </div>
+    <BannerView name="Customer Login" details="home/customer login"/>
     <div
       class="my-[150px] w-[80%] lg:max-w-[1200px] lg:w-full m-auto flex flex-col px-6 lg:flex-row justify-between gap-[40px]"
     >
@@ -48,12 +43,13 @@
 import LayoutView from '@/components/dashboard/LayoutView.vue'
 import InputDiv from '@/components/Reuseables/InputDiv.vue'
 import ButtonDiv from '@/components/Reuseables/ButtonDiv.vue'
-
+import BannerView from '@/components/Reuseables/BannerView.vue';
 export default {
   components: {
     LayoutView,
     InputDiv,
     ButtonDiv,
+    BannerView
   },
 }
 </script>

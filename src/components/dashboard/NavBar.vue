@@ -3,7 +3,9 @@
     <div class="flex h-[80px] items-center gap-[30px] justify-between px-28 lg:px-12 shadow-md bg-gray2">
       <div class="flex items-center gap-[10px] w-[150px] lg:w-[200px]">
         <v-icon name="pr-bars" scale="2" class="text-lightBlack largeScreenOnly" v-show="!isHome"></v-icon>
-        <img src="/logo.png" alt="Lezada" class="w-[100px] lg:w-[130px]" />
+        <router-link to="/">
+          <img src="/logo.png" alt="Lezada" class="w-[100px] lg:w-[130px]" />
+        </router-link>
       </div>
       <div class="gap-[10px] navlinks justify-between text-gray h-full"  @mouseleave="activeNavLink = ''">
         <div v-for="navLink in navLinksContent" :key="navLink" class="cursor-pointer h-full items-center flex relative"
