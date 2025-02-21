@@ -1,6 +1,6 @@
 <template>
-  <div class="relative pb-10" :style="{ transform: `translateX(${currentTranslate}px)` }">
-    <img :src="image" alt="banner" class="w-full m-auto h-full object-contain object-top" draggable="false"/>
+  <div class="relative">
+    <img :src="image" alt="banner" class="w-full m-auto h-full object-contain object-top"/>
     <div class="absolute left-[15%] top-[50%] -translate-y-[50%] space-y-[10px]">
       <p class="text-blue font-[550] text-[17px] tracking-[4px]">{{ title.toUpperCase() }}</p>
       <p class="description text-[28px] max-w-[200px] md:text-[40px] md:max-w-[350px] font-[550]">{{ description }}</p>
@@ -14,7 +14,7 @@
 <script>
 import ButtonDiv from './ButtonDiv.vue';
 export default {
-  props:["image","title","description","currentTranslate"],
+  props:["image","title","description"],
   components:{ ButtonDiv }
 }
 </script>

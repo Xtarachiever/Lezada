@@ -1,7 +1,7 @@
 <template>
   <LayoutView>
-    <div >
-      <div class="slider relative" @mousedown="startDrag" @mouseup="endDrag" @mouseleave="endDrag" @mousemove="onDrag">
+    <div>
+      <!-- <div class="slider relative">
         <div>
           <v-icon name="md-arrowbackiosnew"
             class="absolute transition-all left-[15px] sm:left-[30px] -translate-y-[50%] top-[45%] text-gray2 hover:text-lightBlack cursor-pointer z-[2]"
@@ -13,6 +13,22 @@
         <div v-for="eachSlider in sliderDetails" :key="eachSlider.title" v-show="eachSlider.image === defaultSlide" class="home_div" >
           <CarouselDiv :image="eachSlider.image" :description="eachSlider.description" :title="eachSlider.title" :currentTranslate="currentTranslate"/>
         </div>
+      </div> -->
+      <div class="relative">
+        <Splide ref="sliderRef"
+          :options="{ type: 'loop', perPage: 1, gap: '8rem', padding: { left: '15%', right: '15%' }, arrows: false, }">
+          <SplideSlide v-for="(eachSlider,index) in sliderDetails" :key="eachSlider.title">
+            <CarouselDiv :image="eachSlider.image" :description="eachSlider.description" :title="eachSlider.title" />
+            <div>
+            <v-icon name="md-arrowbackiosnew"
+              class="absolute transition-all -left-[80px] -translate-y-[50%] top-[45%] text-gray2 hover:text-lightBlack cursor-pointer z-[2]"
+              scale="2.8" @click="goToSlide('decrement',index)"></v-icon>
+            <v-icon name="md-arrowforwardios"
+              class="absolute transition-all -right-[80px] -translate-y-[50%] top-[45%] text-gray2 hover:text-lightBlack cursor-pointer z-[2]"
+              scale="2.8" @click="goToSlide('increment',index)"></v-icon>
+          </div>
+          </SplideSlide>
+        </Splide>
       </div>
       <div class="m-auto home_div">
         <div class=" py-16">
@@ -48,14 +64,13 @@ import LayoutView from '@/components/dashboard/LayoutView.vue'
 import CarouselDiv from '@/components/Reuseables/CarouselDiv.vue';
 import { reactive, ref } from 'vue';
 import HoverProductCard from '@/components/Reuseables/HoverProductCard.vue';
+import { Splide, SplideSlide } from '@splidejs/vue-splide';
+
 export default {
-  components: { LayoutView, CarouselDiv, HoverProductCard },
+  components: { LayoutView, CarouselDiv, HoverProductCard, Splide, SplideSlide },
 
   setup() {
-    const isDragging = ref(false);
-    const startX = ref(0);
-    const currentTranslate = ref(0);
-    const prevTranslate = ref(0)
+    const sliderRef = ref(null);
 
     const sliderDetails = reactive([
       { image: '/carousel-1.jpg', description: "Bottle Grinder, Small, 2-Piece", title: "Accessories" },
@@ -76,42 +91,34 @@ export default {
       defaultSlide.value = sliderDetails[i].image
     }
 
-    const startDrag = (event) =>{
-      isDragging.value = true;
-      startX.value = event.pageX
-      prevTranslate.value = currentTranslate.value
+    const goToSlide = (action,index) =>{
+      if(action === 'increment'){
+        sliderRef.value.splide.go(+index + 1)
+      }else{
+        sliderRef.value.splide.go(+index - 1)
+      }
     }
 
-    const onDrag = (event)=> {
-      if (!isDragging.value) return;
-      const diff = event.pageX - startX.value;
-      currentTranslate.value = prevTranslate.value + diff;
-    }
-
-    const endDrag = () => {
-      isDragging.value = false;
-    }
 
     return {
       defaultSlide,
       handleSlideFunctionality,
       sliderDetails,
-      startDrag,
-      endDrag,
-      onDrag,
-      currentTranslate
+      sliderRef,
+      goToSlide,
     }
   }
 }
 </script>
 
 <style>
-.home_div{
+.home_div {
   width: 100%;
   margin: auto;
   max-width: 1200px;
   padding: 0px 20px;
 }
+
 .tags p {
   transition: all .3s ease-in;
 }
@@ -120,13 +127,49 @@ export default {
   text-decoration: underline;
 }
 
-.slider{
+.slider {
   transition: transform 0.3s ease;
 }
-@media screen and (max-width:1190px) {
-  .home_div{
-  width: 90%;
-}
+
+/* slider styles */
+.splide {
+  max-width: 100%;
+  background: inherit;
 }
 
+.splide__slide img {
+  width: 100%;
+  height: 100%;
+}
+
+.splide__track .splide__list {
+  /* gap: 120px; */
+}
+.splide__pagination{
+  display: none !important;
+}
+.splide__track .splide__list li {
+  max-width: 2200px;
+  width: 100%;
+}
+.splide__track .splide__list li.is-active{
+  position: relative;
+}
+.splide__track .splide__list li{
+  position: unset;
+}
+.splide__slide {
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.splide__slide.is-active {
+  opacity: 1;
+}
+
+@media screen and (max-width:1190px) {
+  .home_div {
+    width: 90%;
+  }
+}
 </style>

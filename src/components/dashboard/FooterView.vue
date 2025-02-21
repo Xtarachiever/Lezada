@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <div class="justify-items-center grid grid-cols-3 lg:grid-cols-6 footer-contents gap-[50px]" v-else>
+    <div class="sm:justify-items-center grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-6 footer-contents gap-[50px]" v-else>
       <div class="col-span-1">
         <div class="pb-4">
           <img src="/logo.png" alt="Lezada" />
@@ -59,7 +59,7 @@
         <p><v-icon name="fa-instagram"></v-icon><span>Instagram</span></p>
         <p><v-icon name="pr-youtube"></v-icon><span>Youtube</span></p>
       </div>
-      <div class="col-span-2 max-w-[400px]">
+      <div class="sm:col-span-2 max-w-[400px]">
         <p class="subscribe header">Subscribe.</p>
         <p class="max-w-[400px] 2xl:max-w-none">
           Subscribe to our newsletter to receive news on update.
@@ -95,7 +95,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .footer-contents > div {
   display: flex;
   gap: 30px;

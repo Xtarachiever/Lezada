@@ -152,4 +152,9 @@ export default {
     width: 80%;
   }
 }
+@media screen and (max-width:400px){
+  .video_container .img_div{
+    width: 94%;
+  }
+}
 </style>

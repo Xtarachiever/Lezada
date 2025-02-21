@@ -5,3 +5,15 @@
 * {
   font-family: 'Work Sans', serif;
 }
+
+.splide {
+  max-width: 800px;
+  margin: auto;
+  background-color: rgb(245, 241, 241);
+  padding: 1rem;
+}
+.splide__slide img {
+  border-radius: 10px;
+  width: 500px;
+  height: 500px;
+}

@@ -5,7 +5,7 @@ import App from './App.vue'
 import router from './router'
 import { OhVueIcon, addIcons } from 'oh-vue-icons'
 import VueSplide from '@splidejs/vue-splide';
-
+import '@splidejs/splide/dist/css/splide.min.css';
 import {
   PrBars,
   MdKeyboardarrowdownRound,
