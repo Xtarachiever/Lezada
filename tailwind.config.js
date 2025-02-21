@@ -26,6 +26,9 @@ module.exports = {
       },
       gridTemplateColumns:{
         'fill-350': 'repeat(auto-fill, minmax(250px, 1fr))',
+      },
+      rotate:{
+        '270':'270deg'
       }
     },
   },

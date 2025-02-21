@@ -105,7 +105,7 @@ export const menuItem = {
   pages: {
     length: 1,
     item1: [
-      { title: 'About Us', link: '/' },
+      { title: 'About Us', link: '/about' },
       { title: 'About Us Two', link: '/' },
       { title: 'Contact Us', link: '/' },
       { title: 'F.A.Q', link: '/' },

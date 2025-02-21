@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-[url('/register-banner.jpg')] h-[220px] pt-4 px-5">
+    <div :class="aboutUrlIncluded ? `bg-[url('/about-banner.png')]` : `bg-[url('/register-banner.jpg')]`" class="h-[220px] pt-4 px-5 bg-no-repeat">
       <div class="max-w-[1200px] m-auto w-[80%] lg:w-full">
 
         <div v-for="detail in bannerDetails" :key="detail.label">
@@ -12,11 +12,15 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
 export default {
   props:['name','details'],
   setup(props){
+    const route = useRoute()
+
+    const aboutUrlIncluded = ref('')
     const bannerDetails = computed(()=>{
       const link = props.details.split('/')
       const header = link[1].charAt(0).toUpperCase() + link[1].slice(1)
@@ -27,8 +31,13 @@ export default {
       }]
     })
 
+    onMounted(()=>{
+      aboutUrlIncluded.value = route.path.split('/').filter((value)=>value !== '').includes('about')
+    })
+
     return{
       bannerDetails,
+      aboutUrlIncluded
     }
   }
 }

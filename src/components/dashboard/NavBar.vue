@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <div class="flex h-[80px] items-center gap-[30px] justify-between px-28 lg:px-12 shadow-md bg-gray2">
+    <div class="flex h-[80px] items-center gap-[30px] justify-between px-[30px] sm:px-28 lg:px-12 shadow-md bg-gray2">
       <div class="flex items-center gap-[10px] w-[150px] lg:w-[200px]">
         <v-icon name="pr-bars" scale="2" class="text-lightBlack largeScreenOnly" v-show="!isHome"></v-icon>
         <router-link to="/">
@@ -40,7 +40,9 @@
           </div>
           <div v-else v-for="[key, value] in Object.entries(menuItems[activeNavLink.toLowerCase()]).slice(1)" :key="key">
             <div v-for="item in value" :key="item" class="py-[4px]">
-              {{ item.title }}
+              <router-link :to="item.link">
+                {{ item.title }}
+              </router-link>
             </div>
           </div>
         </div>

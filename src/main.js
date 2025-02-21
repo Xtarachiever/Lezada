@@ -26,7 +26,8 @@ import {
   PxMinus,
   IoPhonePortraitSharp,
   MdEmailRound,
-  RiHeart3Line
+  RiHeart3Line,
+  BiPlayCircle
 } from 'oh-vue-icons/icons'
 const app = createApp(App)
 
@@ -50,7 +51,8 @@ addIcons(
   PxMinus,
   IoPhonePortraitSharp,
   MdEmailRound,
-  RiHeart3Line
+  RiHeart3Line,
+  BiPlayCircle
 )
 
 app.use(router)

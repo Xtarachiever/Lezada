@@ -1,7 +1,7 @@
 <template>
   <LayoutView>
     <div >
-      <div class="slider relative">
+      <div class="slider relative" @mousedown="startDrag" @mouseup="endDrag" @mouseleave="endDrag" @mousemove="onDrag">
         <div>
           <v-icon name="md-arrowbackiosnew"
             class="absolute transition-all left-[15px] sm:left-[30px] -translate-y-[50%] top-[45%] text-gray2 hover:text-lightBlack cursor-pointer z-[2]"
@@ -10,8 +10,8 @@
             class="absolute transition-all right-[15px] sm:right-[30px] -translate-y-[50%] top-[45%] text-gray2 hover:text-lightBlack cursor-pointer z-[2]"
             scale="2.8" @click="handleSlideFunctionality('increment')"></v-icon>
         </div>
-        <div v-for="eachSlider in sliderDetails" :key="eachSlider.title" v-show="eachSlider.image === defaultSlide" class="home_div">
-          <CarouselDiv :image="eachSlider.image" :description="eachSlider.description" :title="eachSlider.title" />
+        <div v-for="eachSlider in sliderDetails" :key="eachSlider.title" v-show="eachSlider.image === defaultSlide" class="home_div" >
+          <CarouselDiv :image="eachSlider.image" :description="eachSlider.description" :title="eachSlider.title" :currentTranslate="currentTranslate"/>
         </div>
       </div>
       <div class="m-auto home_div">
@@ -52,6 +52,11 @@ export default {
   components: { LayoutView, CarouselDiv, HoverProductCard },
 
   setup() {
+    const isDragging = ref(false);
+    const startX = ref(0);
+    const currentTranslate = ref(0);
+    const prevTranslate = ref(0)
+
     const sliderDetails = reactive([
       { image: '/carousel-1.jpg', description: "Bottle Grinder, Small, 2-Piece", title: "Accessories" },
       { image: '/carousel-2.jpg', description: "Large, Food board", title: "Handmade" },
@@ -70,10 +75,31 @@ export default {
       }
       defaultSlide.value = sliderDetails[i].image
     }
+
+    const startDrag = (event) =>{
+      isDragging.value = true;
+      startX.value = event.pageX
+      prevTranslate.value = currentTranslate.value
+    }
+
+    const onDrag = (event)=> {
+      if (!isDragging.value) return;
+      const diff = event.pageX - startX.value;
+      currentTranslate.value = prevTranslate.value + diff;
+    }
+
+    const endDrag = () => {
+      isDragging.value = false;
+    }
+
     return {
       defaultSlide,
       handleSlideFunctionality,
-      sliderDetails
+      sliderDetails,
+      startDrag,
+      endDrag,
+      onDrag,
+      currentTranslate
     }
   }
 }
@@ -92,6 +118,10 @@ export default {
 
 .tags p:hover {
   text-decoration: underline;
+}
+
+.slider{
+  transition: transform 0.3s ease;
 }
 @media screen and (max-width:1190px) {
   .home_div{

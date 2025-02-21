@@ -1,6 +1,7 @@
 <template>
   <div>
     <button :class="[variant ? variant : 'blackButton', moreStylings]" :type="type ? type : 'button'">
+      <v-icon :name="iconName" v-if="iconName"></v-icon>
       {{ name }}
     </button>
   </div>
@@ -8,7 +9,7 @@
 
 <script>
 export default {
-  props: ['name', 'type', 'variant','moreStylings'],
+  props: ['name', 'type', 'variant','moreStylings','iconName'],
 }
 </script>
 
