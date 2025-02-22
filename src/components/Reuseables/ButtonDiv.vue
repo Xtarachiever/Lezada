@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button :class="[variant ? variant : 'blackButton', moreStylings]" :type="type ? type : 'button'">
+    <button :class="[variant ? variant : 'blackButton hover:border hover:bg-transparent hover:text-lightBlack transition-all', moreStylings]" :type="type ? type : 'button'">
       <v-icon :name="iconName" v-if="iconName"></v-icon>
       {{ name }}
     </button>

@@ -59,6 +59,47 @@
         </div>
       </div>
     </div>
+    <div class="testimonials bg-[url('/testimonials-bg.png')] px-[20px] sm:px-[100px] py-16">
+      <p class="text-[23px] sm:text-[48px] py-2 pb-4 text-center">Testimonials</p>
+        <Splide ref="sliderRef" :options="{
+          type: 'loop', perPage: 3, gap: '20px', arrows: false,
+          breakpoints: {
+            1100: {
+              perPage:2,
+              gap:'40px'
+            },
+            768:{
+              perPage:1
+            }
+          }
+        }" class="relative cursor-grab">
+          <SplideSlide v-for="(testimonial,index) in testimonials" :key="index">
+            <div>
+              <p class="sm:max-w-[380px] leading-[34px]">{{ testimonial.testimonies }}</p>
+              <div class="flex items-center gap-[20px] py-[30px]">
+                <img :src="testimonial.profilePic" alt="profile" class="w-[120px] rounded-full h-[120px]"/>
+                <div class="flex flex-col">
+                  <p class="font-semibold">{{ testimonial.name }}</p>
+                  <p class="text-gray1">/ {{ testimonial.job }}</p>
+                </div>
+              </div>
+            </div>
+          </SplideSlide>
+        </Splide>
+      </div>
+      <div class="pt-[70px]">
+        <p class="text-[42px] text-center">Our Brands</p>
+        <div class="py-[80px]">
+          <div class="flex gap-[10px] justify-between w-[80%] m-auto">
+            <img src="/brands/1.png" alt="Brand1"/>
+            <img src="/brands/2.png" alt="Brand2"/>
+            <img src="/brands/3.png" alt="Brand3"/>
+            <img src="/brands/4.png" alt="Brand4"/>
+            <img src="/brands/5.png" alt="Brand5"/>
+            <img src="/brands/6.png" alt="Brand6"/>
+          </div>
+        </div>
+      </div>
   </LayoutView>
 </template>
 
@@ -66,19 +107,25 @@
 <script>
 import BannerView from '@/components/Reuseables/BannerView.vue';
 import LayoutView from '@/components/dashboard/LayoutView.vue';
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import ButtonDiv from '@/components/Reuseables/ButtonDiv.vue';
+import { Splide, SplideSlide } from '@splidejs/vue-splide';
+import { Testimonials } from '@/components/data/testimonials';
 export default {
   components: {
     BannerView,
     LayoutView,
-    ButtonDiv
+    ButtonDiv,
+    Splide,
+    SplideSlide,
   },
   setup() {
     const playVideo = ref(false);
 
+    const testimonials = reactive(Testimonials);
     return {
-      playVideo
+      playVideo,
+      testimonials
     }
   },
 }
@@ -127,6 +174,11 @@ export default {
 }
 .video_container .img_div{
   width: 75%;
+}
+.splide__slide img{
+  max-width: 80px;
+  height: 80px;
+  border-radius: 50%;
 }
 @media (min-width: 1024px) {
   .about {

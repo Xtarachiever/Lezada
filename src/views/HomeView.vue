@@ -1,34 +1,26 @@
 <template>
   <LayoutView>
     <div>
-      <!-- <div class="slider relative">
-        <div>
-          <v-icon name="md-arrowbackiosnew"
-            class="absolute transition-all left-[15px] sm:left-[30px] -translate-y-[50%] top-[45%] text-gray2 hover:text-lightBlack cursor-pointer z-[2]"
-            scale="2.8" @click="handleSlideFunctionality('decrement')"></v-icon>
-          <v-icon name="md-arrowforwardios"
-            class="absolute transition-all right-[15px] sm:right-[30px] -translate-y-[50%] top-[45%] text-gray2 hover:text-lightBlack cursor-pointer z-[2]"
-            scale="2.8" @click="handleSlideFunctionality('increment')"></v-icon>
-        </div>
-        <div v-for="eachSlider in sliderDetails" :key="eachSlider.title" v-show="eachSlider.image === defaultSlide" class="home_div" >
-          <CarouselDiv :image="eachSlider.image" :description="eachSlider.description" :title="eachSlider.title" :currentTranslate="currentTranslate"/>
-        </div>
-      </div> -->
       <div class="relative">
-        <Splide ref="sliderRef"
-          :options="{ type: 'loop', perPage: 1, gap: '8rem', padding: { left: '15%', right: '15%' }, arrows: false, }">
-          <SplideSlide v-for="(eachSlider,index) in sliderDetails" :key="eachSlider.title">
+        <Splide ref="sliderRef" :options="{
+          type: 'loop', perPage: 1, gap: '8rem', padding: { left: '15%', right: '15%' }, arrows: false,
+          breakpoints: {
+            1024: {
+              gap: '2rem',
+              padding: { left: '0px', right: '0px' }
+            }
+          }
+        }" class="relative">
+          <SplideSlide v-for="eachSlider in sliderDetails" :key="eachSlider.title">
             <CarouselDiv :image="eachSlider.image" :description="eachSlider.description" :title="eachSlider.title" />
-            <div>
-            <v-icon name="md-arrowbackiosnew"
-              class="absolute transition-all -left-[80px] -translate-y-[50%] top-[45%] text-gray2 hover:text-lightBlack cursor-pointer z-[2]"
-              scale="2.8" @click="goToSlide('decrement',index)"></v-icon>
-            <v-icon name="md-arrowforwardios"
-              class="absolute transition-all -right-[80px] -translate-y-[50%] top-[45%] text-gray2 hover:text-lightBlack cursor-pointer z-[2]"
-              scale="2.8" @click="goToSlide('increment',index)"></v-icon>
-          </div>
           </SplideSlide>
         </Splide>
+        <v-icon name="md-arrowbackiosnew"
+          class="absolute transition-all left-[30px] lg:left-[10%] -translate-y-[50%] top-[45%] text-gray2 hover:text-lightBlack cursor-pointer z-[2]"
+          scale="2.8" @click="goToSlide('prev')"></v-icon>
+        <v-icon name="md-arrowforwardios"
+          class="absolute transition-all right-[30px] lg:right-[10%] -translate-y-[50%] top-[45%] text-gray2 hover:text-lightBlack cursor-pointer z-[2]"
+          scale="2.8" @click="goToSlide('next')"></v-icon>
       </div>
       <div class="m-auto home_div">
         <div class=" py-16">
@@ -91,11 +83,11 @@ export default {
       defaultSlide.value = sliderDetails[i].image
     }
 
-    const goToSlide = (action,index) =>{
-      if(action === 'increment'){
-        sliderRef.value.splide.go(+index + 1)
-      }else{
-        sliderRef.value.splide.go(+index - 1)
+    const goToSlide = (direction) => {
+      if (direction === 'next') {
+        sliderRef.value.splide.go('>')
+      } else {
+        sliderRef.value.splide.go("<");
       }
     }
 
@@ -145,19 +137,24 @@ export default {
 .splide__track .splide__list {
   /* gap: 120px; */
 }
-.splide__pagination{
+
+.splide__pagination {
   display: none !important;
 }
+
 .splide__track .splide__list li {
   max-width: 2200px;
   width: 100%;
 }
-.splide__track .splide__list li.is-active{
+
+.splide__track .splide__list li.is-active {
   position: relative;
 }
-.splide__track .splide__list li{
+
+.splide__track .splide__list li {
   position: unset;
 }
+
 .splide__slide {
   opacity: 0.6;
   transition: opacity 0.3s ease;
