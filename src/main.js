@@ -27,7 +27,8 @@ import {
   IoPhonePortraitSharp,
   MdEmailRound,
   RiHeart3Line,
-  BiPlayCircle
+  BiPlayCircle,
+  RiDoubleQuotesR
 } from 'oh-vue-icons/icons'
 const app = createApp(App)
 
@@ -52,7 +53,8 @@ addIcons(
   IoPhonePortraitSharp,
   MdEmailRound,
   RiHeart3Line,
-  BiPlayCircle
+  BiPlayCircle,
+  RiDoubleQuotesR
 )
 
 app.use(router)

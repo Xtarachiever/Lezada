@@ -77,7 +77,7 @@
             <div>
               <p class="sm:max-w-[380px] leading-[34px]">{{ testimonial.testimonies }}</p>
               <div class="flex items-center gap-[20px] py-[30px]">
-                <img :src="testimonial.profilePic" alt="profile" class="w-[120px] rounded-full h-[120px]"/>
+                <img :src="testimonial.profilePic" alt="profile" class="w-[120px] rounded-full h-[120px] object-cover object-top"/>
                 <div class="flex flex-col">
                   <p class="font-semibold">{{ testimonial.name }}</p>
                   <p class="text-gray1">/ {{ testimonial.job }}</p>
