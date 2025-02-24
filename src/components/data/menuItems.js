@@ -108,9 +108,9 @@ export const menuItem = {
       { title: 'About Us', link: '/about-us' },
       { title: 'About Us Two', link: '/about-us-two' },
       { title: 'Contact Us', link: '/contact-us' },
-      { title: 'F.A.Q', link: '/' },
-      { title: 'Coming Soon', link: '/' },
-      { title: 'Not Found', link: '/' },
+      { title: 'F.A.Q', link: '/faq' },
+      { title: 'Coming Soon', link: '/coming-soon' },
+      { title: 'Not Found', link: '/not-found' },
     ]
   },
   blog: {
