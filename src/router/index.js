@@ -23,6 +23,11 @@ const router = createRouter({
       component: () => import('../views/AboutTwoView.vue'),
     },
     {
+      path: '/contact-us',
+      name: 'ContactUs',
+      component: () => import('../views/ContactUs.vue'),
+    },
+    {
       path: '/other/login-register',
       name: 'Register',
       component: () => import('../views/RegistrationView.vue'),

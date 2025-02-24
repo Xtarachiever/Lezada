@@ -32,7 +32,7 @@ export default {
     })
 
     onMounted(()=>{
-      aboutUrlIncluded.value = route.path.split('/').filter((value)=>value !== '').includes('about')
+      aboutUrlIncluded.value = route.path.split('/').some(value => ['about', 'contact-us', 'faq','about-us-two'].includes(value));
     })
 
     return{

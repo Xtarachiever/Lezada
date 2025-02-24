@@ -107,7 +107,7 @@ export const menuItem = {
     item1: [
       { title: 'About Us', link: '/about-us' },
       { title: 'About Us Two', link: '/about-us-two' },
-      { title: 'Contact Us', link: '/' },
+      { title: 'Contact Us', link: '/contact-us' },
       { title: 'F.A.Q', link: '/' },
       { title: 'Coming Soon', link: '/' },
       { title: 'Not Found', link: '/' },

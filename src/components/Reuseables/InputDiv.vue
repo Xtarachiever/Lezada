@@ -1,6 +1,6 @@
 <template>
   <div class="w-full relative py-2 z-[1]">
-    <label v-show="label" class="text-black uppercase">{{ label }}</label>
+    <label v-show="label" :class="[top ? top : '-top-[10px]', capitalize ? 'capitalize' : 'uppercase', (inputFocus || modelValue !== '') ? 'hidden' : 'block', classVariant]" class="absolute pointer-events-none text-black text-left">{{ label }}</label>
     <input
       :type="type ? type : 'text'"
       :value="modelValue ? modelValue : ''"
@@ -8,6 +8,8 @@
       @input="$emit('update:modelValue', $event.target.value)"
       :placeholder="placeholder ? placeholder : ''"
       class="w-full"
+      @focus="handleInputFocus"
+      @blur="handleInputBlur"
     />
     <v-icon
       v-if="iconName"
@@ -19,9 +21,28 @@
 </template>
 
 <script>
+import { ref } from 'vue';
+
 export default {
-  props: ['type', 'modelValue', 'iconName', 'placeholder', 'label','variant'],
+  props: ['type', 'modelValue', 'iconName', 'placeholder', 'label','variant','top', 'capitalize', 'classVariant'],
   emits: ['update:modelValue'],
+  setup(){
+    const inputFocus = ref(false)
+
+    const handleInputFocus = () =>{
+      inputFocus.value = true
+    }
+
+    const handleInputBlur = () =>{
+      inputFocus.value = false
+    }
+
+    return{
+      handleInputFocus,
+      inputFocus,
+      handleInputBlur
+    }
+  }
 }
 </script>
 

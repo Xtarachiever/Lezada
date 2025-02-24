@@ -28,7 +28,10 @@ import {
   MdEmailRound,
   RiHeart3Line,
   BiPlayCircle,
-  RiDoubleQuotesR
+  RiDoubleQuotesR,
+  FaMapMarkerAlt,
+  FaPhoneAlt,
+  BiClockFill
 } from 'oh-vue-icons/icons'
 const app = createApp(App)
 
@@ -54,7 +57,10 @@ addIcons(
   MdEmailRound,
   RiHeart3Line,
   BiPlayCircle,
-  RiDoubleQuotesR
+  RiDoubleQuotesR,
+  FaMapMarkerAlt,
+  FaPhoneAlt,
+  BiClockFill
 )
 
 app.use(router)
