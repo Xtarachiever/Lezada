@@ -43,6 +43,11 @@ const router = createRouter({
       component: () => import('../views/ComingSoon.vue'),
     },
     {
+      path: '/order-tracking',
+      name: 'OrderTracking',
+      component: () => import('../views/OrderTracking.vue'),
+    },
+    {
       path: '/not-found',
       name: 'NotFound',
       component: () => import('../views/NotFound.vue'),

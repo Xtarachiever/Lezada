@@ -57,7 +57,7 @@ export const menuItem = {
     item3: [
       { title: 'Shop Pages', link: '/' },
       { title: 'Checkout', link: '/' },
-      { title: 'Order Tracking', link: '/' },
+      { title: 'Order Tracking', link: '/order-tracking' },
       { title: 'My Account', link: '/' },
       { title: 'Login Register', link: '/other/login-register' },
     ],
