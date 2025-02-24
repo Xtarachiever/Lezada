@@ -38,6 +38,16 @@ const router = createRouter({
       component: () => import('../views/FaqView.vue'),
     },
     {
+      path: '/coming-soon',
+      name: 'Coming-Soon',
+      component: () => import('../views/ComingSoon.vue'),
+    },
+    {
+      path: '/not-found',
+      name: 'NotFound',
+      component: () => import('../views/NotFound.vue'),
+    },
+    {
       path: '/wishlist',
       name: 'Wishlist',
       component: () => import('../views/WishListView.vue'),
