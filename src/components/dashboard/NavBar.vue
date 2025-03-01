@@ -11,7 +11,9 @@
         <div v-for="navLink in navLinksContent" :key="navLink" class="cursor-pointer h-full items-center flex relative"
           @mouseover="activeNavLinkOnHover(navLink.name, $event)">
           <div class="flex items-center gap-[2px] eachMenuItem" @mouseleave="activeNavLink = ''">
-            <p class="font-[500]">{{ navLink.name }}</p>
+            <RouterLink :to="navLink.link">
+              <p class="font-[500]">{{ navLink.name }}</p>
+            </RouterLink>
             <v-icon name="md-keyboardarrowdown-round"></v-icon>
           </div>
         </div>
@@ -27,7 +29,8 @@
                 <router-link :to="item.link">
                   <p :class="index === 0 ? 'font-[500] text-lightBlack' : 'text-gray cursor-pointer'" @mouseover="updateNavLinkSubTitle(item.title)" @mouseleave="navLinkSubTitle = ''">
                     <span>{{ item.title }}</span>
-                    <img v-show="navLinkSubTitle === item.title" :src="'/'+navLinkSubTitle.toLowerCase().split(' ').join('-') + '.jpg'" class="absolute z-[10] w-[220px] rounded-sm -top-[50px] shadow-md -right-[80px]"/>
+                    <img :src="item.image" alt=""/>
+                    <!-- <img v-show="navLinkSubTitle === item.title" :src="'/'+navLinkSubTitle.toLowerCase().split(' ').join('-') + '.jpg'" class="absolute z-[10] w-[220px] rounded-sm -top-[50px] shadow-md -right-[80px]"/> -->
                   </p>
                 </router-link>
               </div>

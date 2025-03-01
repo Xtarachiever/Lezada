@@ -1,22 +1,22 @@
 [
   {
     "name": "Home",
-    "dropdown": ""
+    "link": "/"
   },
   {
     "name": "Shop",
-    "dropdown": ""
+    "link": "/shop/left-sidebar"
   },
   {
     "name": "Elements",
-    "dropdown": ""
+    "link": ""
   },
   {
     "name": "Pages",
-    "dropdown": ""
+    "link": ""
   },
   {
     "name": "Blog",
-    "dropdown": ""
+    "link": ""
   }
 ]

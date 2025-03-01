@@ -31,7 +31,10 @@ import {
   RiDoubleQuotesR,
   FaMapMarkerAlt,
   FaPhoneAlt,
-  BiClockFill
+  BiClockFill,
+  BiGrid3X3GapFill,
+  BiListUl,
+  BiFilter
 } from 'oh-vue-icons/icons'
 const app = createApp(App)
 
@@ -60,10 +63,24 @@ addIcons(
   RiDoubleQuotesR,
   FaMapMarkerAlt,
   FaPhoneAlt,
-  BiClockFill
+  BiClockFill,
+  BiGrid3X3GapFill,
+  BiListUl,
+  BiFilter
 )
 
 app.use(router)
 app.use( VueSplide );
+app.mixin({
+  methods: {
+    truncateText(str, truncateLength) {
+      if (str.length > truncateLength) {
+        return str.slice(0, truncateLength) + '...'
+      } else {
+        return str
+      }
+    },
+  },
+})
 app.component('v-icon', OhVueIcon)
 app.mount('#app')

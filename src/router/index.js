@@ -48,6 +48,11 @@ const router = createRouter({
       component: () => import('../views/OrderTracking.vue'),
     },
     {
+      path: '/shop/:position',
+      name: 'SideBar',
+      component: () => import('../views/ShopView.vue'),
+    },
+    {
       path: '/not-found',
       name: 'NotFound',
       component: () => import('../views/NotFound.vue'),

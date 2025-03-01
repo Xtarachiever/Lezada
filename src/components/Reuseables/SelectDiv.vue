@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full">
-    <select class="w-full border border-gray1 outline-none">
+  <div class="w-full cursor-pointer">
+    <select :class="stylishSelect ? 'border-b pb-2 text-gray1' : 'border'" class="w-full border-gray1 outline-none">
       <option v-for="option in options" :key="option" :value="option">{{ option }}</option>
     </select>
   </div>
@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  props:['options']
+  props:['options','stylishSelect']
 }
 </script>
 

@@ -3,7 +3,7 @@ export const menuItem = {
     length: 5,
     item1: [
       { title: 'Home Group', link: '/' },
-      { title: 'Decor', link: '/' },
+      { title: 'Decor', link: '/', image:'/decor.jpg' },
       { title: 'Creative', link: '/' },
       { title: 'Perfumes', link: '/' },
       { title: 'Trending', link: '/' },
@@ -36,8 +36,8 @@ export const menuItem = {
     length: 4,
     item1: [
       { title: 'Group one', link: '/' },
-      { title: 'Left Sidebar', link: '/' },
-      { title: 'Right Sidebar', link: '/' },
+      { title: 'Left Sidebar', link: '/shop/left-sidebar' },
+      { title: 'Right Sidebar', link: '/shop/right-sidebar' },
       { title: 'No Sidebar', link: '/' },
       { title: 'Full Width No Space', link: '/' },
       { title: 'Full Width No Sidebar', link: '/' },
@@ -111,7 +111,7 @@ export const menuItem = {
       { title: 'F.A.Q', link: '/faq' },
       { title: 'Coming Soon', link: '/coming-soon' },
       { title: 'Not Found', link: '/not-found' },
-    ]
+    ],
   },
   blog: {
     length: 1,
@@ -120,6 +120,6 @@ export const menuItem = {
       { title: 'Grid Layout', link: '/' },
       { title: 'List Layout', link: '/' },
       { title: 'Single Post Layout', link: '/' },
-    ]
+    ],
   },
 }
