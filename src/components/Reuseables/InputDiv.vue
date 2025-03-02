@@ -1,6 +1,6 @@
 <template>
   <div class="w-full relative py-2 z-[1]">
-    <label v-show="label" :class="[top ? top : '-top-[10px]', capitalize ? 'capitalize' : 'uppercase', (inputFocus || modelValue !== '') ? 'hidden' : 'block', classVariant]" class="absolute pointer-events-none text-black text-left">{{ label }}</label>
+    <label v-show="label" :class="[top ? top : '-top-[10px]', capitalize ? 'capitalize' : 'uppercase', classVariant]" class="absolute pointer-events-none text-black text-left">{{ label }}</label>
     <input
       :type="type ? type : 'text'"
       :value="modelValue ? modelValue : ''"
@@ -17,14 +17,14 @@
       class="text-gray absolute right-0"
       scale="1.5"
     ></v-icon>
+    <p class="text-red-500" v-show="errorMsg">{{ errorMsg }}</p>
   </div>
 </template>
-
+<!-- (inputFocus || modelValue !== '') ? 'hidden' : 'block', -->
 <script>
 import { ref } from 'vue';
-
 export default {
-  props: ['type', 'modelValue', 'iconName', 'placeholder', 'label','variant','top', 'capitalize', 'classVariant'],
+  props: ['type', 'modelValue', 'iconName', 'placeholder', 'label','variant','top', 'capitalize', 'classVariant','errorMsg'],
   emits: ['update:modelValue'],
   setup(){
     const inputFocus = ref(false)

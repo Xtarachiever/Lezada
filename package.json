@@ -12,12 +12,14 @@
   },
   "dependencies": {
     "@splidejs/vue-splide": "^0.6.12",
+    "axios": "^1.8.1",
     "framer-motion": "^12.0.6",
     "oh-vue-icons": "^1.0.0-rc3",
     "pinia": "^2.3.1",
     "react-hook-form": "^7.54.2",
     "vue": "^3.5.13",
-    "vue-router": "^4.5.0"
+    "vue-router": "^4.5.0",
+    "vue3-toastify": "^0.2.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.18.0",

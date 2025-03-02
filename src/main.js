@@ -6,6 +6,7 @@ import router from './router'
 import { OhVueIcon, addIcons } from 'oh-vue-icons'
 import VueSplide from '@splidejs/vue-splide';
 import '@splidejs/splide/dist/css/splide.min.css';
+import 'vue3-toastify/dist/index.css';
 import {
   PrBars,
   MdKeyboardarrowdownRound,
@@ -36,6 +37,7 @@ import {
   BiListUl,
   BiFilter
 } from 'oh-vue-icons/icons'
+import { createPinia } from 'pinia'
 const app = createApp(App)
 
 addIcons(
@@ -71,6 +73,7 @@ addIcons(
 
 app.use(router)
 app.use( VueSplide );
+app.use(createPinia)
 app.mixin({
   methods: {
     truncateText(str, truncateLength) {

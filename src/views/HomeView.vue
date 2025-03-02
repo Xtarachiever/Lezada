@@ -1,7 +1,7 @@
 <template>
   <LayoutView>
     <div>
-      <div class="relative">
+      <div class="relative z-[1]">
         <Splide ref="sliderRef" :options="{
           type: 'loop', perPage: 1, gap: '8rem', padding: { left: '15%', right: '15%' }, arrows: false,
           breakpoints: {
