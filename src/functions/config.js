@@ -13,7 +13,9 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     // Add authorization token if available
-    const token = localStorage.getItem('token');
+    const storedUserDetails = JSON.parse(localStorage.getItem('lezadaUser'))
+    const token = storedUserDetails?.token
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -30,8 +32,6 @@ api.interceptors.response.use(
       // Handle 401 Unauthorized
       if (error.response.status === 401) {
         console.error('Unauthorized! Logging out...');
-        localStorage.removeItem('token');
-        window.location.href = '/login';
       }
     }
     return Promise.reject(error);

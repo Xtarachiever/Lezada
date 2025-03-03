@@ -40,6 +40,7 @@ import {
 import { createPinia } from 'pinia'
 const app = createApp(App)
 
+const pinia = createPinia()
 addIcons(
   PrBars,
   MdKeyboardarrowdownRound,
@@ -73,14 +74,16 @@ addIcons(
 
 app.use(router)
 app.use( VueSplide );
-app.use(createPinia)
+app.use(pinia)
 app.mixin({
   methods: {
     truncateText(str, truncateLength) {
-      if (str.length > truncateLength) {
-        return str.slice(0, truncateLength) + '...'
-      } else {
-        return str
+      if(str){
+        if (str.length > truncateLength) {
+          return str.slice(0, truncateLength) + '...'
+        } else {
+          return str
+        }
       }
     },
   },

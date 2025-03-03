@@ -24,15 +24,11 @@
       </div>
       <div class="m-auto home_div">
         <div class=" py-16">
-          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-[30px] gap-y-[50px]">
-            <HoverProductCard newProduct />
-            <HoverProductCard newProduct sales />
-            <HoverProductCard newProduct sales />
-            <HoverProductCard sales out />
-            <HoverProductCard newProduct />
-            <HoverProductCard newProduct sales />
-            <HoverProductCard out sales />
-            <HoverProductCard sales />
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-[30px] gap-y-[50px] justify-items-center items-stretch">
+            <div v-for="product in allProductData[0]?.data" :key="product.id" class="w-full">
+              <HoverProductCard newProduct :name="product.name" :originalPrice="product.price" :image="product.image" />
+            </div>
+            <!-- <HoverProductCard newProduct sales /> -->
           </div>
         </div>
         <div class="text-center space-y-[30px]">
@@ -54,15 +50,29 @@
 <script>
 import LayoutView from '@/components/dashboard/LayoutView.vue'
 import CarouselDiv from '@/components/Reuseables/CarouselDiv.vue';
-import { reactive, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import HoverProductCard from '@/components/Reuseables/HoverProductCard.vue';
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
+import { fetchAllProducts } from '@/functions/ProductsProviders';
+import { toast } from 'vue3-toastify';
+import { useProductStore } from '@/store/products';
+import { storeToRefs } from 'pinia';
 
 export default {
   components: { LayoutView, CarouselDiv, HoverProductCard, Splide, SplideSlide },
 
   setup() {
+    // Sliders
     const sliderRef = ref(null);
+    const allProductData = reactive([]);
+
+    const productStore = useProductStore()
+
+    onMounted(() => {
+      productStore.addProducts();
+    });
+
+    const { products} = storeToRefs(productStore)
 
     const sliderDetails = reactive([
       { image: '/carousel-1.jpg', description: "Bottle Grinder, Small, 2-Piece", title: "Accessories" },
@@ -91,6 +101,25 @@ export default {
       }
     }
 
+    const getAllProducts = async () =>{
+      try{
+        // const res = await fetchAllProducts()
+        const response = products?.value?.data
+        if(response){
+          if(response?.status === "success"){
+            // toast.success(response?.data)
+            allProductData.push(response?.data)
+          }
+        }
+      }catch(err){
+        console.log(err)
+      }
+    }
+
+    onMounted(()=>{
+      getAllProducts();
+    })
+
 
     return {
       defaultSlide,
@@ -98,6 +127,7 @@ export default {
       sliderDetails,
       sliderRef,
       goToSlide,
+      allProductData
     }
   }
 }
