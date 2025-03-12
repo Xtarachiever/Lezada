@@ -26,7 +26,7 @@
         <div class=" py-16">
           <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-[30px] gap-y-[50px] justify-items-center items-stretch">
             <div v-for="product in allProductData[0]?.data" :key="product.id" class="w-full">
-              <HoverProductCard newProduct :name="product.name" :originalPrice="product.price" :image="product.image" />
+              <HoverProductCard newProduct :name="product.name" :originalPrice="product.price" :image="product.image" :productId="String(product.id)"/>
             </div>
             <!-- <HoverProductCard newProduct sales /> -->
           </div>
@@ -50,11 +50,9 @@
 <script>
 import LayoutView from '@/components/dashboard/LayoutView.vue'
 import CarouselDiv from '@/components/Reuseables/CarouselDiv.vue';
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive, ref, watch } from 'vue';
 import HoverProductCard from '@/components/Reuseables/HoverProductCard.vue';
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
-import { fetchAllProducts } from '@/functions/ProductsProviders';
-import { toast } from 'vue3-toastify';
 import { useProductStore } from '@/store/products';
 import { storeToRefs } from 'pinia';
 
@@ -67,10 +65,6 @@ export default {
     const allProductData = reactive([]);
 
     const productStore = useProductStore()
-
-    onMounted(() => {
-      productStore.addProducts();
-    });
 
     const { products} = storeToRefs(productStore)
 
@@ -116,9 +110,17 @@ export default {
       }
     }
 
-    onMounted(()=>{
-      getAllProducts();
-    })
+    onMounted(getAllProducts);
+
+    watch(
+      () => productStore.products,
+      () => {
+        getAllProducts();
+      },
+      { deep: true }
+    );
+
+    productStore.addProducts();
 
 
     return {
@@ -162,10 +164,6 @@ export default {
 .splide__slide img {
   width: 100%;
   height: 100%;
-}
-
-.splide__track .splide__list {
-  /* gap: 120px; */
 }
 
 .splide__pagination {

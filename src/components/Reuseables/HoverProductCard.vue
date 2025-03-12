@@ -5,15 +5,17 @@
       <p v-if="newProduct" class="new text-sm">new</p>
       <p v-if="out" class="out-of-sale text-sm">out</p>
     </div>
-    <div class="w-full flex gap-[40px] h-[80%]">
-      <div class="bg-gray1 relative w-full h-[400px]">
-        <img :src="image" alt="Product" class="w-full h-full object-cover" />
-        <div class="absolute right-[20px] top-[25px] space-y-[10px] functionalities">
-          <v-icon name="hi-heart"></v-icon>
-          <img src="/compare.svg" alt="compare" class="w-[20px] " />
-          <v-icon name="io-search"></v-icon>
+    <div class="">
+      <RouterLink :to="{name:'ProductView',params: {'productName': name}, query:{'productId': productId}}" class="w-full flex gap-[40px] h-[80%]">
+        <div class="bg-gray1 relative w-full h-[400px]">
+          <img :src="image" alt="Product" class="w-full h-full object-cover" />
+          <div class="absolute right-[20px] top-[25px] space-y-[10px] functionalities">
+            <v-icon name="hi-heart"></v-icon>
+            <img src="/compare.svg" alt="compare" class="w-[20px] " />
+            <v-icon name="io-search"></v-icon>
+          </div>
         </div>
-      </div>
+      </RouterLink>
       <div v-show="layoutView === 'list'" class="w-[60%] pt-4">
         <p class="text-[23px]">Lorem ipsum, dolor sit amet</p>
         <div class="pt-2">
@@ -56,7 +58,8 @@ export default {
     name:String,
     originalPrice: String,
     salesPrice: String,
-    image: String
+    image: String,
+    productId: String
   },
 
   setup() {

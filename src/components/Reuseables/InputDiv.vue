@@ -4,7 +4,7 @@
     <input
       :type="type ? type : 'text'"
       :value="modelValue ? modelValue : ''"
-      :class="variant ? variant : 'borderBottomInput'"
+      :class="[variant ? variant : 'borderBottomInput', moreStylings]"
       @input="$emit('update:modelValue', $event.target.value)"
       :placeholder="placeholder ? placeholder : ''"
       class="w-full"
@@ -24,7 +24,7 @@
 <script>
 import { ref } from 'vue';
 export default {
-  props: ['type', 'modelValue', 'iconName', 'placeholder', 'label','variant','top', 'capitalize', 'classVariant','errorMsg'],
+  props: ['type', 'modelValue', 'iconName', 'placeholder', 'label','variant','top', 'capitalize', 'classVariant','errorMsg','moreStylings'],
   emits: ['update:modelValue'],
   setup(){
     const inputFocus = ref(false)

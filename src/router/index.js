@@ -53,6 +53,11 @@ const router = createRouter({
       component: () => import('../views/ShopView.vue'),
     },
     {
+      path: '/shop/product-basic/:productName',
+      name: 'ProductView',
+      component: () => import('../views/ProductView.vue'),
+    },
+    {
       path: '/not-found',
       name: 'NotFound',
       component: () => import('../views/NotFound.vue'),
