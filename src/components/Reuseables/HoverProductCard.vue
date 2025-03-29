@@ -8,7 +8,7 @@
     <div class="">
       <RouterLink :to="{name:'ProductView',params: {'productName': name}, query:{'productId': productId}}" class="w-full flex gap-[40px] h-[80%]">
         <div class="bg-gray1 relative w-full h-[400px]">
-          <img :src="image" alt="Product" class="w-full h-full object-cover" />
+          <img :src="currentImage" alt="Product" class="w-full h-full object-cover" />
           <div class="absolute right-[20px] top-[25px] space-y-[10px] functionalities">
             <v-icon name="hi-heart"></v-icon>
             <img src="/compare.svg" alt="compare" class="w-[20px] " />
@@ -31,8 +31,10 @@
         <p v-if="hoveringCard" class="text-tomatoRed flex items-center gap-[5px] absolute inset-0">
           <v-icon name="md-add-round"></v-icon>
           <span v-if="sales && out">Out of Stock</span>
-          <span v-else-if="sales">Buy Now</span>
-          <span v-else>Add to cart</span>
+          <span v-else-if="sales" @click="handleAddToCart">Buy Now</span>
+          <span v-else @click="!isProductAdded ? handleAddToCart() : null">
+            {{ isProductAdded ? 'Added to cart' : 'Add to cart' }}
+          </span>
         </p>
         <p v-else class="absolute inset-0 flex items-center pt-2">{{truncateText(name,20)}}
         </p>
@@ -40,7 +42,7 @@
 
       <div class="pt-2" v-show="layoutView !== 'list'">
         <span class="original-price"
-          :class="sales ? 'line-through text-xs text-gray' : 'text-black font-[550]'">$20.00</span>
+          :class="sales ? 'line-through text-xs text-gray' : 'text-black font-[550]'">$ {{ originalPrice }}</span>
         <span v-if="sales" class="sales-price text-black font-[550] pl-2">$17.60</span>
       </div>
     </div>
@@ -48,7 +50,9 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { useCartStore } from '@/store/cart';
+import { storeToRefs } from 'pinia';
+import { computed, onMounted, reactive, ref, watch } from 'vue';
 export default {
   props: {
     sales: Boolean,
@@ -59,25 +63,54 @@ export default {
     originalPrice: String,
     salesPrice: String,
     image: String,
-    productId: String
+    productId: String,
+    hoverImage: String,
   },
 
-  setup() {
+  setup(props) {
     const hoveringCard = ref(false);
+    const cartStore = useCartStore();
+    const { cart } = storeToRefs(cartStore);
+    // const productAdded = ref({})
+    const currentImage = ref('');
 
     // Methods
     const handleHoverEffect = () => {
-      hoveringCard.value = true
+      hoveringCard.value = true;
     }
 
     const handleMouseOutEffect = () => {
       hoveringCard.value = false
     }
 
+    const handleImageHovering = () =>{
+      currentImage.value = hoveringCard.value ? props.hoverImage : props.image
+    }
+
+    watch(()=> hoveringCard.value,
+    () => handleImageHovering())
+
+    const isProductAdded = computed(()=> cart.value.some(cartItem => cartItem.product_id == props.productId))
+
+    onMounted(()=>{
+      handleImageHovering()
+    });
+
+    const handleAddToCart = async () =>{
+      await cartStore.addProductsToCart({
+        product_id: props.productId,
+        quantity:1
+      });
+      // productsAddedToCart()
+    }
+
     return {
       handleHoverEffect,
       hoveringCard,
       handleMouseOutEffect,
+      handleAddToCart,
+      isProductAdded,
+      currentImage
     }
   }
 }

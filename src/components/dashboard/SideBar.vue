@@ -16,6 +16,9 @@
       <div v-if="name === 'wishlist'">
         <WishLists />
       </div>
+      <div v-if="name === 'cart'">
+        <SideBarCart />
+      </div>
     </div>
   </div>
 </template>
@@ -25,8 +28,9 @@
 import { computed } from 'vue';
 import WishLists from '../WishLists.vue';
 import NavigationSideBar from './NavigationSideBar.vue';
+import SideBarCart from '../SideBarCart.vue';
 export default {
-  components:{WishLists, NavigationSideBar},
+  components:{WishLists, NavigationSideBar, SideBarCart},
   props:{
     name:{
       type: String,

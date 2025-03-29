@@ -60,7 +60,10 @@
           </router-link>
           <v-icon name="hi-heart" @click="handleActivatorClicks('wishlist')" class="cursor-pointer largeScreenOnly"></v-icon>
         </div>
-        <div>
+        <div class="relative">
+          <div class="bg-tomatoRed rounded-full w-[15px] h-[15px] m-auto text-center absolute -top-[6px] -right-[2px]">
+            <span class="m-auto text-white text-xs flex justify-center">{{ cart?.length }}</span>
+          </div>
           <router-link to="/cart" class="smallScreenOnly">
             <v-icon  name="md-shoppingcart-round" class="cursor-pointer"></v-icon>
           </router-link>
@@ -77,6 +80,8 @@
 import { onMounted, reactive, ref } from 'vue';
 import NavLinks from './NavLinks.json';
 import { menuItem } from '../data/menuItems'
+import { useCartStore } from '@/store/cart';
+import { storeToRefs } from 'pinia';
 export default {
   props: {
     handleActivatorClicks: {
@@ -91,9 +96,13 @@ export default {
     let dropdownPosition = reactive({ left: 0, top: 80 })
     const isHome = ref(false)
 
+    const cartStore = useCartStore();
+    const {cart} = storeToRefs(cartStore)
+
     // on mounted
     onMounted(() => {
       isHome.value = window.location.pathname === "/";
+      cartStore.getAllProductsInCart()
     });
 
     // Methods
@@ -125,7 +134,8 @@ export default {
       dropdownPosition,
       navLinkSubTitle,
       updateNavLinkSubTitle,
-      isHome
+      isHome,
+      cart
     }
   },
 }

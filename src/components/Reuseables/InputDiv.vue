@@ -11,6 +11,7 @@
       @focus="handleInputFocus"
       @blur="handleInputBlur"
     />
+
     <v-icon
       v-if="iconName"
       :name="iconName"
@@ -23,6 +24,7 @@
 <!-- (inputFocus || modelValue !== '') ? 'hidden' : 'block', -->
 <script>
 import { ref } from 'vue';
+
 export default {
   props: ['type', 'modelValue', 'iconName', 'placeholder', 'label','variant','top', 'capitalize', 'classVariant','errorMsg','moreStylings'],
   emits: ['update:modelValue'],
@@ -44,6 +46,8 @@ export default {
     }
   }
 }
+
+
 </script>
 
 <style scoped>

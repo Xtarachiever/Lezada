@@ -23,14 +23,16 @@
           scale="2.8" @click="goToSlide('next')"></v-icon>
       </div>
       <div class="m-auto home_div">
-        <div class=" py-16">
+        <div v-if="isLoading" class="loader h-[40vh] m-auto mt-10 pt-10"></div>
+        <div class=" py-16" v-else-if="allProductData[0]?.data.length > 0">
           <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-[30px] gap-y-[50px] justify-items-center items-stretch">
             <div v-for="product in allProductData[0]?.data" :key="product.id" class="w-full">
-              <HoverProductCard newProduct :name="product.name" :originalPrice="product.price" :image="product.image" :productId="String(product.id)"/>
+              <HoverProductCard newProduct :name="product.name" :originalPrice="product.price" :hover-image="product.hover_image" :image="product.image" :productId="String(product.id)"/>
             </div>
             <!-- <HoverProductCard newProduct sales /> -->
           </div>
         </div>
+        <div v-else>No Data Found</div>
         <div class="text-center space-y-[30px]">
           <img src="/cabinet.jpg" alt="cabinet" class="w-full max-w-[800px] m-auto" />
           <div class="tags text-gray1 flex items-center justify-center gap-[20px] text-md cursor-pointer">
@@ -66,7 +68,7 @@ export default {
 
     const productStore = useProductStore()
 
-    const { products} = storeToRefs(productStore)
+    const { products, isLoading} = storeToRefs(productStore)
 
     const sliderDetails = reactive([
       { image: '/carousel-1.jpg', description: "Bottle Grinder, Small, 2-Piece", title: "Accessories" },
@@ -103,6 +105,7 @@ export default {
           if(response?.status === "success"){
             // toast.success(response?.data)
             allProductData.push(response?.data)
+            console.log(allProductData)
           }
         }
       }catch(err){
@@ -110,7 +113,7 @@ export default {
       }
     }
 
-    onMounted(getAllProducts);
+    onMounted(()=>getAllProducts);
 
     watch(
       () => productStore.products,
@@ -120,7 +123,7 @@ export default {
       { deep: true }
     );
 
-    productStore.addProducts();
+    productStore.getProducts();
 
 
     return {
@@ -129,7 +132,8 @@ export default {
       sliderDetails,
       sliderRef,
       goToSlide,
-      allProductData
+      allProductData,
+      isLoading
     }
   }
 }

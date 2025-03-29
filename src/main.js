@@ -35,7 +35,9 @@ import {
   BiClockFill,
   BiGrid3X3GapFill,
   BiListUl,
-  BiFilter
+  BiFilter,
+  BiHeart,
+  MdCloseSharp
 } from 'oh-vue-icons/icons'
 import { createPinia } from 'pinia'
 const app = createApp(App)
@@ -69,7 +71,9 @@ addIcons(
   BiClockFill,
   BiGrid3X3GapFill,
   BiListUl,
-  BiFilter
+  BiFilter,
+  BiHeart,
+  MdCloseSharp
 )
 
 app.use(router)

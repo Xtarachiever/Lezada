@@ -1,7 +1,7 @@
 <template>
   <div>
-    <button :class="[variant ? variant : 'blackButton hover:border hover:bg-transparent hover:text-lightBlack transition-all', moreStylings]" :type="type ? type : 'button'">
-      <v-icon :name="iconName" v-if="iconName"></v-icon>
+    <button :class="[variant ? variant : 'blackButton hover:border hover:bg-transparent hover:text-lightBlack transition-all', moreStylings,'group']" :type="type ? type : 'button'">
+      <v-icon :name="iconName" v-if="iconName" :class="iconColor"></v-icon>
       {{ name }}
     </button>
   </div>
@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  props: ['name', 'type', 'variant','moreStylings','iconName'],
+  props: ['name', 'type', 'variant','moreStylings','iconName','iconColor'],
 }
 </script>
 
