@@ -5,10 +5,10 @@
         <InputDiv placeholder="Search products..." iconName="io-search"/>
       </div>
       <div>
-        <p class="text-gray1 text-xl py-1 py-3">Categories</p>
+        <p class="text-lg py-1 py-3">Categories</p>
         <div>
           <!-- <p class="underline">All Categories</p> -->
-          <ul class="text-gray1">
+          <ul class="text-md text-gray1 flex flex-col space-y-[12px] filter_list">
             <li>All Categories</li>
             <li>Decor</li>
             <li>Fashion</li>
@@ -30,5 +30,8 @@ export default {
 </script>
 
 <style>
-
+.filter_list li:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
 </style>

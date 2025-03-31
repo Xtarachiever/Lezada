@@ -1,5 +1,5 @@
 <template>
-    <div :class="aboutUrlIncluded ? `bg-[url('/about-banner.png')]` : `bg-[url('/register-banner.jpg')]`" class="min-h-[220px] pt-4 px-5 bg-no-repeat">
+    <div :class="aboutUrlIncluded ? `bg-[url('/about-banner.png')]` : `bg-[url('/register-banner.jpg')]`" class="pb-[50px] min-h-[220px] pt-4 px-5 bg-no-repeat">
       <div class="max-w-[1200px] m-auto w-[80%] lg:w-full">
         <div v-for="detail in bannerDetails" :key="detail.label">
           <p class="mt-[50px] text-[45px]">{{ truncateText(detail.header,25) }}</p>

@@ -105,7 +105,7 @@ export default {
           if(response?.status === "success"){
             // toast.success(response?.data)
             allProductData.push(response?.data)
-            console.log(allProductData)
+            // console.log(allProductData)
           }
         }
       }catch(err){

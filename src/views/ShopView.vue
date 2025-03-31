@@ -2,9 +2,9 @@
   <LayoutView>
     <BannerView details="home/shop left sidebar" />
     <div>
-      <div class="flex justify-between py-4 items-center border-b border-gray3 px-[20px] xl:px-[160px]">
+      <div class="flex justify-between py-4 items-center border-b border-gray3 px-[40px] md:px-[20px] xl:px-[130px] flex-col  md:flex-row gap-[30px]">
         <p>Showing 20 of 73 products</p>
-        <div class="flex gap-[30px] items-center w-[45%] justify-between px-6">
+        <div class="hidden sm:flex gap-[30px] items-center w-[90%] md:w-[48%] justify-between px-6">
           <div class="w-[200px] cursor-pointer">
             <SelectDiv :options="['Default', 'Price - High to Low', 'Price - Low to High']" :stylishSelect="true" />
           </div>
@@ -19,18 +19,18 @@
             </svg>
             <v-icon name="bi-list-ul" scale="1.5" :class="layoutView === 'list' ? 'text-lightBlack' : 'text-gray3'" class="hover:text-lightBlack cursor-pointer" @click="handleViewChanges('list')"></v-icon>
           </div>
-          <div class="text-gray1 cursor-pointer hover:text-lightBlack flex gap-[5px] items-center">
+          <div class="text-gray1 cursor-pointer hover:text-lightBlack flex gap-[5px] items-center" @click="handleResize">
             <v-icon name="bi-filter" class="" scale="1.3"></v-icon>
             <p>Filter</p>
           </div>
         </div>
       </div>
       <!-- Shop Content -->
-       <div class="relative p-4 min-h-[100vh] w-[95%] xl:w-[80%] m-auto pt-[120px]">
-          <div class="absolute max-w-[330px] w-full px-4" :class="pageStructure === 'left-sidebar' ? 'left-[10px]' : pageStructure === 'right-sidebar' ? 'right-[10px]' : ''">
+       <div class="relative p-5 md:p-4 min-h-[100vh] w-[95%] xl:w-[85%] m-auto md:pt-[120px]">
+          <div class="relative pb-10 md:absolute md:max-w-[330px] w-full md:px-4" :class="[pageStructure === 'left-sidebar' ? 'left-[10px]' : pageStructure === 'right-sidebar' ? 'right-[10px]' : '', dropDown ? 'block' : 'hidden']">
             <SideBar />
           </div>
-          <div class="" :class="pageStructure === 'left-sidebar' ? 'ml-[350px]' : pageStructure === 'right-sidebar' ? 'mr-[350px]' : ''">
+          <div class="" :class="pageStructure === 'left-sidebar' ? 'md:ml-[350px]' : pageStructure === 'right-sidebar' ? 'mr-[350px]' : ''">
             <ShopContent :layoutView="layoutView" />
           </div>
        </div>
@@ -56,10 +56,28 @@ export default {
   },
   setup() {
     const route = useRoute();
-    console.log(route.path)
+    // console.log(route.path)
     const iconColor = ref('#ccc');
     const pageStructure = ref('left-sidebar');
     const layoutView = ref('smallGrid');
+
+    const dropDown = ref(false);
+
+    const isSmallScreen = ref(window.matchMedia("(max-width: 760px)").matches);
+
+    const handleResize = () => {
+      if(isSmallScreen.value){
+        dropDown.value = !dropDown.value
+      }else{
+        dropDown.value = true
+      }
+    };
+
+    onMounted(()=> {
+      if(!isSmallScreen.value){
+        dropDown.value = true
+      }
+    })
 
     const updatePageStructure = () => {
       pageStructure.value = route.path.split("/").filter((value) => value !== "")[1];
@@ -83,7 +101,9 @@ export default {
       iconColor,
       pageStructure,
       layoutView,
-      handleViewChanges
+      handleViewChanges,
+      handleResize,
+      dropDown
     }
   }
 }

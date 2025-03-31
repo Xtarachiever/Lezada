@@ -5,29 +5,34 @@
       <p v-if="newProduct" class="new text-sm">new</p>
       <p v-if="out" class="out-of-sale text-sm">out</p>
     </div>
-    <div class="">
-      <RouterLink :to="{name:'ProductView',params: {'productName': name}, query:{'productId': productId}}" class="w-full flex gap-[40px] h-[80%]">
-        <div class="bg-gray1 relative w-full h-[400px]">
+    <div :class="layoutView === 'list' ? 'flex gap-[20px]' : ''">
+      <RouterLink :to="{name:'ProductView',params: {'productName': name}, query:{'productId': productId}}" :class="routerCustomStyling ? routerCustomStyling : 'w-full'" class=" flex gap-[40px] h-[80%]">
+        <div class="bg-gray1 relative w-full " :class="customStyling ? customStyling : 'h-[400px]'">
           <img :src="currentImage" alt="Product" class="w-full h-full object-cover" />
           <div class="absolute right-[20px] top-[25px] space-y-[10px] functionalities">
-            <v-icon name="hi-heart"></v-icon>
+            <v-icon name="hi-heart" @click.prevent="handleAddToWishlist"></v-icon>
             <img src="/compare.svg" alt="compare" class="w-[20px] " />
             <v-icon name="io-search"></v-icon>
           </div>
         </div>
       </RouterLink>
-      <div v-show="layoutView === 'list'" class="w-[60%] pt-4">
-        <p class="text-[23px]">Lorem ipsum, dolor sit amet</p>
+      <div v-show="layoutView === 'list'" class="w-[60%]" :class="layoutView !== 'list' && 'pt-4'">
+        <p class="text-[23px]">{{ name }}</p>
         <div class="pt-2">
           <span class="original-price"
-            :class="sales ? 'line-through text-xs text-gray' : 'text-black font-[550]'">$20.00</span>
+            :class="sales ? 'line-through text-xs text-gray' : 'text-black font-[550]'">$ {{ originalPrice }}</span>
           <span v-if="sales" class="sales-price text-black font-[550] pl-2">$17.60</span>
         </div>
-        <p class="py-4">Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.</p>
+        <p class="py-4">{{ description }}</p>
+        <div class="pt-6">
+          <RouterLink :to="{name:'ProductView',params: {'productName': name}, query:{'productId': productId}}">
+            <ButtonDiv name="Select Option"/>
+          </RouterLink>
+        </div>
       </div>
     </div>
-    <div class="pt-4">
-      <div class="h-[36px] relative flex items-center" v-show="layoutView !== 'list'">
+    <div class="pt-4" v-show="layoutView !== 'list'">
+      <div class="h-[36px] relative flex items-center">
         <p v-if="hoveringCard" class="text-tomatoRed flex items-center gap-[5px] absolute inset-0">
           <v-icon name="md-add-round"></v-icon>
           <span v-if="sales && out">Out of Stock</span>
@@ -40,7 +45,7 @@
         </p>
       </div>
 
-      <div class="pt-2" v-show="layoutView !== 'list'">
+      <div class="pt-2">
         <span class="original-price"
           :class="sales ? 'line-through text-xs text-gray' : 'text-black font-[550]'">$ {{ originalPrice }}</span>
         <span v-if="sales" class="sales-price text-black font-[550] pl-2">$17.60</span>
@@ -53,7 +58,12 @@
 import { useCartStore } from '@/store/cart';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted, reactive, ref, watch } from 'vue';
+import ButtonDiv from './ButtonDiv.vue';
+import { useWishlistStore } from '@/store/wishlist';
 export default {
+  components:{
+    ButtonDiv
+  },
   props: {
     sales: Boolean,
     out: Boolean,
@@ -65,6 +75,9 @@ export default {
     image: String,
     productId: String,
     hoverImage: String,
+    customStyling: String,
+    routerCustomStyling: String,
+    description: String,
   },
 
   setup(props) {
@@ -72,6 +85,9 @@ export default {
     const cartStore = useCartStore();
     const { cart } = storeToRefs(cartStore);
     // const productAdded = ref({})
+    // Wishlist
+    const wishlistStore = useWishlistStore();
+    const { wishlists } = storeToRefs(wishlistStore);
     const currentImage = ref('');
 
     // Methods
@@ -104,13 +120,20 @@ export default {
       // productsAddedToCart()
     }
 
+    const handleAddToWishlist = async () =>{
+      await wishlistStore.addWishlists({
+        product_id: +props.productId,
+      });
+    }
+
     return {
       handleHoverEffect,
       hoveringCard,
       handleMouseOutEffect,
       handleAddToCart,
       isProductAdded,
-      currentImage
+      currentImage,
+      handleAddToWishlist
     }
   }
 }

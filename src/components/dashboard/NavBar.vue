@@ -29,8 +29,8 @@
                 <router-link :to="item.link">
                   <p :class="index === 0 ? 'font-[500] text-lightBlack' : 'text-gray cursor-pointer'" @mouseover="updateNavLinkSubTitle(item.title)" @mouseleave="navLinkSubTitle = ''">
                     <span>{{ item.title }}</span>
-                    <img :src="item.image" alt=""/>
-                    <!-- <img v-show="navLinkSubTitle === item.title" :src="'/'+navLinkSubTitle.toLowerCase().split(' ').join('-') + '.jpg'" class="absolute z-[10] w-[220px] rounded-sm -top-[50px] shadow-md -right-[80px]"/> -->
+                    <!-- <img :src="item.image" alt=""/> -->
+                    <img v-show="navLinkSubTitle === item.title" :src="'/'+navLinkSubTitle.toLowerCase().split(' ').join('-') + '.jpg'" class="absolute z-[10] w-[220px] rounded-sm -top-[50px] shadow-md -right-[80px]"/>
                   </p>
                 </router-link>
               </div>
@@ -54,7 +54,10 @@
         <v-icon name="io-search" class="largeScreenOnly cursor-pointer"
           @click="handleActivatorClicks('search')"></v-icon>
         <v-icon name="fa-user-alt" class="largeScreenOnly"></v-icon>
-        <div>
+        <div class="relative">
+          <div class="bg-tomatoRed rounded-full w-[15px] h-[15px] m-auto text-center absolute -top-[6px] -right-[2px]">
+            <span class="m-auto text-white text-xs flex justify-center">{{ wishlists?.length }}</span>
+          </div>
           <router-link to="/wishlist" class="smallScreenOnly">
             <v-icon name="hi-heart" class="cursor-pointer"></v-icon>
           </router-link>
@@ -82,6 +85,7 @@ import NavLinks from './NavLinks.json';
 import { menuItem } from '../data/menuItems'
 import { useCartStore } from '@/store/cart';
 import { storeToRefs } from 'pinia';
+import { useWishlistStore } from '@/store/wishlist';
 export default {
   props: {
     handleActivatorClicks: {
@@ -99,10 +103,14 @@ export default {
     const cartStore = useCartStore();
     const {cart} = storeToRefs(cartStore)
 
+    const wishlistStore = useWishlistStore();
+    const { wishlists } = storeToRefs(wishlistStore)
+
     // on mounted
     onMounted(() => {
       isHome.value = window.location.pathname === "/";
-      cartStore.getAllProductsInCart()
+      cartStore.getAllProductsInCart();
+      wishlistStore.getAllWishlists();
     });
 
     // Methods
@@ -135,7 +143,8 @@ export default {
       navLinkSubTitle,
       updateNavLinkSubTitle,
       isHome,
-      cart
+      cart,
+      wishlists
     }
   },
 }
