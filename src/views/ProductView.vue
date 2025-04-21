@@ -1,6 +1,7 @@
 <template>
   <LayoutView>
-    <div v-if="$route.query.productId">
+    <div v-if="isLoading" class="loader m-auto"></div>
+    <div v-else-if="$route.query.productId">
       <BannerView :details="'home/shop/' + productName" />
       <div class="w-[80%] m-auto py-10">
         <div class="py-8 " v-if="product">
@@ -100,6 +101,7 @@
         </div>
       </div>
     </div>
+    <div v-else>No product</div>
   </LayoutView>
 </template>
 
@@ -113,6 +115,7 @@ import { useRoute } from 'vue-router';
 import InputDiv from '@/components/Reuseables/InputDiv.vue';
 import ButtonDiv from '@/components/Reuseables/ButtonDiv.vue';
 import compareIcon from '../../public/compare-icon.vue';
+import { storeToRefs } from 'pinia';
 export default {
   props: [''],
   components: {
@@ -126,6 +129,7 @@ export default {
     const route = useRoute();
     const productName = route.params.productName
     const productStore = useProductStore();
+    const { isLoading } = storeToRefs(productStore)
     const cartStore = useCartStore();
     const currentTab = ref('description')
 
@@ -181,7 +185,8 @@ export default {
       updateQuantity,
       hovered,
       currentTab,
-      isProductAdded
+      isProductAdded,
+      isLoading
     }
   }
 }

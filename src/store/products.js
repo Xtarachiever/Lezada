@@ -8,11 +8,12 @@ export const useProductStore = defineStore('productStore',{
     isLoading: false
   }),
   actions:{
-    async getProducts(){
+    async getProducts({per_page = 10, page = 1,category=''}= {}){
       this.isLoading = true;
-      const fetchedProducts = await fetchAllProducts();
+      const fetchedProducts = await fetchAllProducts({per_page, page,category});
       this.isLoading = false;
       this.products = fetchedProducts
+      return fetchedProducts
     },
     async getSingleProduct(id){
       this.isLoading = true;

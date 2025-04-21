@@ -24,15 +24,35 @@
       </div>
       <div class="m-auto home_div">
         <div v-if="isLoading" class="loader h-[40vh] m-auto mt-10 pt-10"></div>
-        <div class=" py-16" v-else-if="allProductData[0]?.data.length > 0">
-          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-[30px] gap-y-[50px] justify-items-center items-stretch">
-            <div v-for="product in allProductData[0]?.data" :key="product.id" class="w-full">
+        <div class=" py-16" v-else-if="allProductData && allProductData?.length > 0">
+          <div class="flex items-center justify-center gap-[40px] text-[40px] pb-10 categories">
+            <span :class="activeCategory === 'New' ? 'text-black' : 'text-[#ccc]'" @click="handleActiveCategories('New')">New</span>
+            <span :class="activeCategory === 'Popular' ? 'text-black' : 'text-[#ccc]'" @click="handleActiveCategories('Popular')">Popular</span>
+            <span :class="activeCategory === 'Sale' ? 'text-black' : 'text-[#ccc]'" @click="handleActiveCategories('Sale')">Sale</span>
+          </div>
+          <div v-if="activeCategory === 'Popular'" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-[30px] gap-y-[50px] justify-items-center items-stretch">
+            <div v-for="product in allProductData" :key="product.id" class="w-full">
+              <HoverProductCard :popular="true" :name="product.name" :originalPrice="product.price" :hover-image="product.hover_image" :image="product.image" :productId="String(product.id)"/>
+            </div>
+          </div>
+          <div v-else-if="activeCategory === 'New'" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-[30px] gap-y-[50px] justify-items-center items-stretch">
+            <div v-for="product in allNewProductData" :key="product.id" class="w-full">
               <HoverProductCard newProduct :name="product.name" :originalPrice="product.price" :hover-image="product.hover_image" :image="product.image" :productId="String(product.id)"/>
             </div>
-            <!-- <HoverProductCard newProduct sales /> -->
+          </div>
+          <div v-else class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-[30px] gap-y-[50px] justify-items-center items-stretch">
+            <div v-for="product in allSalesProductData" :key="product.id" class="w-full">
+              <HoverProductCard :sales="true" :name="product.name" :originalPrice="product.price" :hover-image="product.hover_image" :image="product.image" :productId="String(product.id)"/>
+            </div>
+          </div>
+          <div class="w-full m-auto py-10">
+            <Pagination :details="paginationDetails" :defined-max-visible="activeCategory === 'Popular' ? maxVisible : 2" @page-change="getAllProducts" v-model:currentPage="currentPage"/>
           </div>
         </div>
-        <div v-else>No Data Found</div>
+        <div v-else class="m-auto w-full flex-col flex items-center w-[400px] py-10 my-10">
+          <img src="../assets/error.png" alt="empty" class="w-full h-full"/>
+          <p class="text-xl font-semibold">No Data found</p>
+        </div>
         <div class="text-center space-y-[30px]">
           <img src="/cabinet.jpg" alt="cabinet" class="w-full max-w-[800px] m-auto" />
           <div class="tags text-gray1 flex items-center justify-center gap-[20px] text-md cursor-pointer">
@@ -57,18 +77,27 @@ import HoverProductCard from '@/components/Reuseables/HoverProductCard.vue';
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
 import { useProductStore } from '@/store/products';
 import { storeToRefs } from 'pinia';
+import Pagination from '@/components/Reuseables/Pagination.vue';
 
 export default {
-  components: { LayoutView, CarouselDiv, HoverProductCard, Splide, SplideSlide },
+  components: { LayoutView, CarouselDiv, HoverProductCard, Splide, SplideSlide, Pagination },
 
   setup() {
     // Sliders
     const sliderRef = ref(null);
-    const allProductData = reactive([]);
+    const allProductData = ref([]);
+    const allNewProductData = ref([]);
+    const allSalesProductData = ref([]);
+    const per_page = ref(20);
+    const paginationDetails = ref([]);
+    const currentPage = ref(1);
+    const activeCategory = ref('Popular');
+    const maxVisible = ref(5);
+    const pageToFetch = ref(20)
 
     const productStore = useProductStore()
 
-    const { products, isLoading} = storeToRefs(productStore)
+    const { isLoading} = storeToRefs(productStore)
 
     const sliderDetails = reactive([
       { image: '/carousel-1.jpg', description: "Bottle Grinder, Small, 2-Piece", title: "Accessories" },
@@ -97,34 +126,57 @@ export default {
       }
     }
 
-    const getAllProducts = async () =>{
+    const getAllProducts = async (page = currentPage.value) =>{
       try{
-        // const res = await fetchAllProducts()
-        const response = products?.value?.data
-        if(response){
-          if(response?.status === "success"){
-            // toast.success(response?.data)
-            allProductData.push(response?.data)
-            // console.log(allProductData)
+        await productStore.getProducts({ page: page, per_page: pageToFetch.value });
+        const response = productStore.products?.data;
+        if (response?.status === 'success') {
+          allProductData.value = response.data.data
+          allNewProductData.value = response.data.data.slice(0, 5);
+          allSalesProductData.value = response.data.data.slice(10,20)
+
+          paginationDetails.value = activeCategory?.value === 'Popular' ?
+          {
+            last_page: response.data.last_page,
+            total: response.data.total,
+            per_page: response.data.per_page,
+            currentPage: response.data.current_page
           }
+          :
+          paginationDetails.value = {
+          last_page: 10,
+          total: 10,
+          per_page: 5,
+          currentPage: 1
+          }
+
+          currentPage.value = response.data.current_page;
         }
       }catch(err){
         console.log(err)
       }
     }
 
-    onMounted(()=>getAllProducts);
+    watch(()=> activeCategory?.value,
+    ()=>{
+      per_page.value = 20
+      if(activeCategory.value !== 'Popular'){
+        paginationDetails.value = {
+          last_page: 10,
+          total: 10,
+          per_page: 5,
+          currentPage: 1
+        }
+      }
+        getAllProducts()
+      }
+    )
 
-    watch(
-      () => productStore.products,
-      () => {
-        getAllProducts();
-      },
-      { deep: true }
-    );
+    const handleActiveCategories = (name) =>{
+      activeCategory.value = name
+    }
 
-    productStore.getProducts();
-
+    onMounted(() => getAllProducts());
 
     return {
       defaultSlide,
@@ -133,7 +185,15 @@ export default {
       sliderRef,
       goToSlide,
       allProductData,
-      isLoading
+      isLoading,
+      paginationDetails,
+      getAllProducts,
+      currentPage,
+      activeCategory,
+      handleActiveCategories,
+      allSalesProductData,
+      allNewProductData,
+      maxVisible
     }
   }
 }
@@ -147,6 +207,13 @@ export default {
   padding: 0px 20px;
 }
 
+.categories span{
+  cursor: pointer;
+}
+.categories span:hover{
+  color: black;
+  transition: all .5s ease-in-out;
+}
 .tags p {
   transition: all .3s ease-in;
 }

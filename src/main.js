@@ -37,7 +37,11 @@ import {
   BiListUl,
   BiFilter,
   BiHeart,
-  MdCloseSharp
+  MdCloseSharp,
+  BiArrowLeftSquare,
+  BiArrowRightSquare,
+  IoHeartDislikeOutline,
+  MdLocalfiredepartmentOutlined
 } from 'oh-vue-icons/icons'
 import { createPinia } from 'pinia'
 const app = createApp(App)
@@ -73,7 +77,11 @@ addIcons(
   BiListUl,
   BiFilter,
   BiHeart,
-  MdCloseSharp
+  MdCloseSharp,
+  BiArrowLeftSquare,
+  BiArrowRightSquare,
+  IoHeartDislikeOutline,
+  MdLocalfiredepartmentOutlined
 )
 
 app.use(router)

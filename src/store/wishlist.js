@@ -18,7 +18,8 @@ export const useWishlistStore = defineStore('wishlistStore',{
     async addWishlists(product_id){
       const wishlistAdded = await addWishlist(product_id)
         if(wishlistAdded?.data?.status === 'success'){
-          this.wishlists.push(wishlistAdded?.data?.data)
+          this.getAllWishlists()
+          // this.wishlists.push(wishlistAdded?.data?.data)
         }
         return wishlistAdded?.data
     },

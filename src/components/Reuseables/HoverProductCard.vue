@@ -4,13 +4,15 @@
       <p v-if="sales" class="sales text-sm">-10%</p>
       <p v-if="newProduct" class="new text-sm">new</p>
       <p v-if="out" class="out-of-sale text-sm">out</p>
+      <p v-if="popular" class="popular text-sm"><v-icon name="md-localfiredepartment-outlined" class="text-tomatoRed"></v-icon></p>
     </div>
     <div :class="layoutView === 'list' ? 'flex gap-[20px]' : ''">
       <RouterLink :to="{name:'ProductView',params: {'productName': name}, query:{'productId': productId}}" :class="routerCustomStyling ? routerCustomStyling : 'w-full'" class=" flex gap-[40px] h-[80%]">
         <div class="bg-gray1 relative w-full " :class="customStyling ? customStyling : 'h-[400px]'">
           <img :src="currentImage" alt="Product" class="w-full h-full object-cover" />
           <div class="absolute right-[20px] top-[25px] space-y-[10px] functionalities">
-            <v-icon name="hi-heart" @click.prevent="handleAddToWishlist"></v-icon>
+            <v-icon v-if="isWishlistAdded" name="io-heart-dislike-outline"></v-icon>
+            <v-icon v-else name="hi-heart" @click.prevent="handleAddToWishlist"></v-icon>
             <img src="/compare.svg" alt="compare" class="w-[20px] " />
             <v-icon name="io-search"></v-icon>
           </div>
@@ -67,6 +69,7 @@ export default {
   props: {
     sales: Boolean,
     out: Boolean,
+    popular: Boolean,
     newProduct: Boolean,
     layoutView:String,
     name:String,
@@ -108,6 +111,8 @@ export default {
 
     const isProductAdded = computed(()=> cart.value.some(cartItem => cartItem.product_id == props.productId))
 
+    const isWishlistAdded = computed(()=> wishlists.value.some(wishlist => wishlist.product_id == props.productId))
+
     onMounted(()=>{
       handleImageHovering()
     });
@@ -133,7 +138,8 @@ export default {
       handleAddToCart,
       isProductAdded,
       currentImage,
-      handleAddToWishlist
+      handleAddToWishlist,
+      isWishlistAdded
     }
   }
 }
@@ -164,7 +170,8 @@ export default {
 
 .sales,
 .new,
-.out-of-sale {
+.out-of-sale,
+.popular {
   color: white;
   text-align: center;
   display: flex;
@@ -174,7 +181,9 @@ export default {
   height: 45px;
   border-radius: 50px;
 }
-
+.popular{
+  background-color: white;
+}
 .new {
   background-color: #c61932;
 }

@@ -1,8 +1,9 @@
 import api from "./config";
 
-export const fetchAllProducts = async () =>{
+export const fetchAllProducts = async ({per_page, page, category}) =>{
   try{
-    const response = await api.get('/products');
+    // const response = await api.get(`/products/${per_page ? `?per_page=${per_page}` : '10'}`);
+    const response = await api.get(`/products?${per_page ? `per_page=${per_page}` : 'per_page=10'}&${page ? `page=${page}` : 'page=1'}&${category ? `category=${category}`: ''}`);
     return response
   }catch(err){
     return err?.response
